@@ -1,0 +1,3676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FEELAUTHIA — Find The Light Inside You</title>
+  <meta name="description" content="FEELAUTHIA is a cozy cartoon emotional-wellness story world about overthinking, insecurity, social comparison, and self-acceptance—without toxic positivity." />
+
+  <!-- Google Fonts: Fredoka (friendly rounded cartoon display headings) & Nunito (clean warm body copy) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#FFFBF2',
+            paperDeep: '#FAF3E6',
+            card: '#FFFFFF',
+            ink: '#2B2320',
+            cleo: '#2D6CDF',
+            luna: '#8E2C3E',
+            mills: '#323B4B',
+            gold: '#F0A830',
+            amberWarm: '#C96B36',
+            sage: '#58896B',
+            night: '#1D253B',
+            shopee: '#EE4D2D',
+            tokopedia: '#03AC0E',
+          },
+          fontFamily: {
+            display: ['"Fredoka"', 'sans-serif'],
+            body: ['"Nunito"', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* =========================================================================
+       FEELAUTHIA STORYBOOK AESTHETIC, MULTI-PAGE ROUTING & ANIMATIONS
+       ========================================================================= */
+    :root {
+      --paper: #FFFBF2;
+      --paper-deep: #FAF3E6;
+      --ink: #2B2320;
+      --cleo: #2D6CDF;
+      --luna: #8E2C3E;
+      --mills: #323B4B;
+      --gold: #F0A830;
+      --amber: #C96B36;
+      --night: #1D253B;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'Nunito', sans-serif;
+      background-image: radial-gradient(rgba(43, 35, 32, 0.055) 1.15px, transparent 1.15px);
+      background-size: 24px 24px;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Strict Multi-Page View: ONLY the active page is rendered at a time */
+    .page-view {
+      display: none;
+    }
+
+    .page-view.active {
+      display: block;
+      animation: pageEnter 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Chunky Storybook Cartoon Borders & Playful Offset Drop Shadows */
+    .comic-card {
+      border: 3px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      border-radius: 24px;
+      background-color: #FFFFFF;
+    }
+
+    .comic-card-sm {
+      border: 2.5px solid var(--ink);
+      box-shadow: 3.5px 3.5px 0 var(--ink);
+      border-radius: 18px;
+    }
+
+    .comic-btn {
+      border: 2.5px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .comic-btn:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: 5.5px 5.5px 0 var(--ink);
+    }
+
+    .comic-btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 var(--ink);
+    }
+
+    /* Navigation Pill States */
+    .nav-pill {
+      border: 2px solid transparent;
+      transition: background-color 0.15s ease, box-shadow 0.12s ease, transform 0.12s ease;
+    }
+
+    .nav-pill:hover {
+      background-color: rgba(240, 168, 48, 0.22);
+    }
+
+    .nav-pill.is-current {
+      background-color: var(--gold);
+      color: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 2.5px 2.5px 0 var(--ink);
+      font-weight: 700;
+    }
+
+    /* Blinking / Twinkling Stars (Runs smoothly across ALL screen sizes) */
+    @keyframes starBlink {
+      0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.72) rotate(0deg);
+      }
+      50% {
+        opacity: 0.95;
+        transform: scale(1.2) rotate(14deg);
+      }
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .twinkle-star {
+      animation: starBlink var(--tw-dur, 3.2s) ease-in-out infinite;
+      animation-delay: var(--tw-delay, 0s);
+      transform-origin: center;
+    }
+
+    .float-gentle {
+      animation: gentleFloat 4.8s ease-in-out infinite;
+    }
+
+    /* Visual Novel Scroll-Reveal Panels */
+    .vn-panel {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .vn-panel.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 3D Book Mockup Stage */
+    .book-stage {
+      perspective: 1000px;
+    }
+
+    .book-3d {
+      transform: rotateY(-10deg) rotateX(2deg);
+      transition: transform 0.3s ease;
+    }
+
+    @media (hover: hover) {
+      .book-stage:hover .book-3d {
+        transform: rotateY(-2deg) rotateX(0deg) translateY(-4px);
+      }
+    }
+
+    /* Tactile Mechanical Keyboard Keychain Cap */
+    .keychain-cap {
+      border: 3px solid var(--ink);
+      box-shadow: 0 9px 0 #1B4EA8, 0 13px 0 var(--ink);
+      transition: transform 0.07s ease, box-shadow 0.07s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .keychain-cap:active,
+    .keychain-cap.pressed {
+      transform: translateY(7px);
+      box-shadow: 0 2px 0 #1B4EA8, 0 6px 0 var(--ink);
+    }
+
+    @keyframes sparklePop {
+      0% { opacity: 1; transform: translate(0, 0) scale(0.7); }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.25); }
+    }
+
+    .sparkle-burst {
+      animation: sparklePop 0.65s ease-out forwards;
+      pointer-events: none;
+    }
+
+    /* Animated Breathing Circle */
+    .breathe-orb {
+      transition: transform 4s ease-in-out, background-color 1.2s ease;
+    }
+
+    /* Responsive Mini-Game Canvas */
+    #escape-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    /* Respect System Reduced-Motion Preference */
+    @media (prefers-reduced-motion: reduce) {
+      .twinkle-star, .float-gentle, .page-view.active {
+        animation: none !important;
+      }
+      .vn-panel {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-gold/40 selection:text-ink">
+
+  <!-- =========================================================================
+       GLOBAL BACKGROUND LAYER: BLINKING STARS (ALL DEVICES) +
+       CLOUDS & ROLLING HILLS PARALLAX (DESKTOP ONLY >= 1024px)
+       ========================================================================= -->
+  <div id="sky-backdrop" aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <!-- Desktop-Only Parallax Clouds -->
+    <div data-parallax="0.22" class="hidden lg:block absolute top-24 left-8 opacity-40">
+      <svg width="160" height="62" viewBox="0 0 160 60" fill="#F0A830" opacity="0.24">
+        <path d="M25 50h110a18 18 0 0 0 3-35.7A26 26 0 0 0 88 12a22 22 0 0 0-40 9A15 15 0 0 0 25 50z"/>
+      </svg>
+    </div>
+    <div data-parallax="-0.20" class="hidden lg:block absolute top-44 right-10 opacity-35">
+      <svg width="185" height="70" viewBox="0 0 160 60" fill="#2D6CDF" opacity="0.16">
+        <path d="M25 50h110a18 18 0 0 0 3-35.7A26 26 0 0 0 88 12a22 22 0 0 0-40 9A15 15 0 0 0 25 50z"/>
+      </svg>
+    </div>
+    <div data-parallax="0.16" class="hidden lg:block absolute top-[60%] left-10 opacity-30">
+      <svg width="135" height="54" viewBox="0 0 160 60" fill="#8E2C3E" opacity="0.14">
+        <path d="M25 50h110a18 18 0 0 0 3-35.7A26 26 0 0 0 88 12a22 22 0 0 0-40 9A15 15 0 0 0 25 50z"/>
+      </svg>
+    </div>
+    <!-- Desktop-Only Subtle Parallax Rolling Storybook Hills at Bottom -->
+    <div data-parallax="0.10" class="hidden lg:block absolute -bottom-8 left-0 right-0 opacity-20">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" class="w-full h-32">
+        <path d="M0,120 Q340,35 720,95 T1440,85 L1440,160 L0,160 Z" fill="#C96B36" opacity="0.35"/>
+        <path d="M0,138 Q420,70 860,120 T1440,112 L1440,160 L0,160 Z" fill="#58896B" opacity="0.45"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       CUSTOM TOAST NOTIFICATION (Replaces alert() cleanly)
+       ========================================================================= -->
+  <div aria-live="polite" class="pointer-events-none fixed top-20 left-1/2 z-50 -translate-x-1/2 px-4 w-full max-w-md flex justify-center">
+    <div id="toast-pill" class="hidden pointer-events-auto comic-card-sm bg-card px-5 py-3 text-sm font-bold text-ink flex items-center gap-2.5">
+      <span id="toast-emoji" class="text-lg">✨</span>
+      <span id="toast-text">Notification</span>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       STICKY CARTOON TOP NAVIGATION BAR
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 px-3 pt-3 sm:px-6">
+    <nav aria-label="FEELAUTHIA Main Navigation" class="mx-auto max-w-6xl comic-card-sm bg-card/95 backdrop-blur-md px-4 py-2.5 sm:px-5 flex items-center justify-between gap-3">
+      <!-- Brand Wordmark -->
+      <a href="#home" data-route="home" class="flex items-center gap-2.5 group focus:outline-none shrink-0">
+        <span class="w-10 h-10 rounded-xl bg-night border-2 border-ink shadow-[2.5px_2.5px_0_#2B2320] flex items-center justify-center group-hover:scale-105 transition-transform">
+          <svg viewBox="0 0 32 32" class="w-6 h-6" fill="none" aria-hidden="true">
+            <path d="M16 3L19 11.5L27.5 14.5L19 17.5L16 26L13 17.5L4.5 14.5L13 11.5L16 3Z" fill="#F0A830" stroke="#FFFBF2" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="25.5" cy="6.5" r="2" fill="#FFFBF2"/>
+          </svg>
+        </span>
+        <div class="leading-tight">
+          <span class="font-display font-bold text-xl text-ink block tracking-wide">FEELAUTHIA</span>
+          <span class="text-[11px] font-bold text-luna uppercase tracking-wider hidden sm:block">Find The Light Inside You</span>
+        </div>
+      </a>
+
+      <!-- Desktop 6-Page Links -->
+      <ul class="hidden lg:flex items-center gap-1 font-display text-sm font-medium">
+        <li><a href="#home" data-route="home" class="nav-pill px-3.5 py-2 rounded-full inline-block">Home</a></li>
+        <li><a href="#story" data-route="story" class="nav-pill px-3.5 py-2 rounded-full inline-block">Visual Novel</a></li>
+        <li><a href="#products" data-route="products" class="nav-pill px-3.5 py-2 rounded-full inline-block">Our Products</a></li>
+        <li><a href="#game" data-route="game" class="nav-pill px-3.5 py-2 rounded-full inline-block">Mini-Game</a></li>
+        <li><a href="#behind" data-route="behind" class="nav-pill px-3.5 py-2 rounded-full inline-block">Behind Feelauthia</a></li>
+        <li><a href="#feedback" data-route="feedback" class="nav-pill px-3.5 py-2 rounded-full inline-block">Feedback</a></li>
+      </ul>
+
+      <!-- Mobile Page Indicator + Hamburger Toggle -->
+      <div class="flex items-center gap-2 lg:hidden">
+        <span id="mobile-page-badge" class="px-3 py-1 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold text-ink">
+          Home
+        </span>
+        <button id="mobile-menu-toggle" type="button" aria-label="Toggle Navigation Menu" aria-expanded="false"
+          class="p-2 rounded-xl border-2 border-ink bg-paper shadow-[2.5px_2.5px_0_#2B2320] active:translate-y-0.5">
+          <svg id="burger-open" class="w-6 h-6 text-ink" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg id="burger-close" class="w-6 h-6 text-ink hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div id="mobile-drawer" class="hidden lg:hidden mx-auto max-w-6xl mt-2 comic-card-sm bg-card p-3.5">
+      <div class="grid grid-cols-2 gap-2 font-display text-sm font-semibold">
+        <a href="#home" data-route="home" class="nav-pill px-3 py-3 rounded-xl bg-paper border-2 border-ink text-center">🏠 Home</a>
+        <a href="#story" data-route="story" class="nav-pill px-3 py-3 rounded-xl bg-paper border-2 border-ink text-center">📖 Visual Novel</a>
+        <a href="#products" data-route="products" class="nav-pill px-3 py-3 rounded-xl bg-paper border-2 border-ink text-center">📓 Our Products</a>
+        <a href="#game" data-route="game" class="nav-pill px-3 py-3 rounded-xl bg-paper border-2 border-ink text-center">🎮 Mini-Game</a>
+        <a href="#behind" data-route="behind" class="nav-pill px-3 py-3 rounded-xl bg-paper border-2 border-ink text-center">👋 Behind Feelauthia</a>
+        <a href="#feedback" data-route="feedback" class="nav-pill px-3 py-3 rounded-xl bg-paper border-2 border-ink text-center">💌 Feedback</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Visual Novel Sticky Top Reading-Progress Bar (Visible ONLY on #story) -->
+  <div id="story-progress-strip" class="hidden sticky top-[76px] z-30 px-4 pt-2 sm:px-6">
+    <div class="mx-auto max-w-4xl comic-card-sm bg-card/95 backdrop-blur-sm px-4 py-2 flex items-center gap-3">
+      <span class="font-display text-xs font-bold text-cleo whitespace-nowrap">📖 Story Progress</span>
+      <div class="flex-1 h-2.5 bg-paperDeep rounded-full border-2 border-ink overflow-hidden">
+        <div id="story-progress-fill" class="h-full bg-gold transition-all duration-150" style="width: 15%"></div>
+      </div>
+      <span id="story-progress-pct" class="font-display text-xs font-bold text-ink w-10 text-right">15%</span>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN MULTI-PAGE VIEWPORT (Only ONE page-view is active at any time)
+       ========================================================================= -->
+  <main class="relative z-10 flex-1 px-4 pt-6 pb-12 sm:px-6">
+
+    <!-- =======================================================================
+         PAGE 1 OF 6: HOME (#home)
+         ======================================================================= -->
+    <section id="page-home" class="page-view active mx-auto max-w-6xl space-y-10" data-page="home">
+
+      <!-- Cozy Corner-Café & Starry Hero Banner -->
+      <div class="comic-card bg-night text-paper p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+        <!-- Hero Blinking Stars & Warm Glow -->
+        <div data-parallax="0.16" class="pointer-events-none absolute inset-0 overflow-hidden">
+          <div class="absolute -bottom-24 right-0 w-96 h-96 rounded-full bg-gold/25 blur-3xl"></div>
+          <svg class="w-full h-full" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path class="twinkle-star" style="--tw-dur:2.8s;--tw-delay:0.2s" d="M85 68l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#F0A830"/>
+            <path class="twinkle-star" style="--tw-dur:3.5s;--tw-delay:1.1s" d="M460 52l2.5 6.5 6.5 2.5-6.5 2.5-2.5 6.5-2.5-6.5-6.5-2.5 6.5-2.5z" fill="#FFFBF2"/>
+            <path class="twinkle-star" style="--tw-dur:3.1s;--tw-delay:0.6s" d="M980 78l3.5 9 9 3.5-9 3.5-3.5 9-3.5-9-9-3.5 9-3.5z" fill="#F0A830"/>
+            <circle class="twinkle-star" style="--tw-dur:2.4s;--tw-delay:1.4s" cx="250" cy="95" r="2.5" fill="#FFFBF2"/>
+            <circle class="twinkle-star" style="--tw-dur:4s;--tw-delay:0.4s" cx="720" cy="70" r="2.5" fill="#FFFBF2"/>
+            <circle class="twinkle-star" style="--tw-dur:2.9s;--tw-delay:1.8s" cx="1040" cy="190" r="2.5" fill="#F0A830"/>
+          </svg>
+        </div>
+
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-6 space-y-5 text-center lg:text-left">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-paper/15 border-2 border-paper/35 text-gold font-display text-xs sm:text-sm font-semibold">
+              <span>☕</span> Welcome to the Corner Café
+            </span>
+
+            <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.06] tracking-tight">
+              FEELAUTHIA
+              <span class="block text-gold text-2xl sm:text-3xl mt-2 font-semibold">
+                Find The Light Inside You
+              </span>
+            </h1>
+
+            <p class="text-paper/90 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+              A character-driven visual story and emotional-wellness world that gently visualizes <strong>overthinking, insecurity, and social comparison</strong>—without toxic positivity.
+            </p>
+
+            <p class="font-display italic text-sm sm:text-base text-gold/95 max-w-lg mx-auto lg:mx-0">
+              "We just need to stop hiding from the light that is already inside us."
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+              <a href="#story" data-route="story" class="comic-btn bg-gold text-ink font-display font-bold px-6 py-3 rounded-full text-base inline-flex items-center gap-2">
+                <span>📖</span> Read the Visual Novel
+              </a>
+              <a href="#products" data-route="products" class="comic-btn bg-cleo text-white font-display font-bold px-6 py-3 rounded-full text-base inline-flex items-center gap-2">
+                <span>📓</span> Explore Our Products
+              </a>
+            </div>
+          </div>
+
+          <!-- Cartoon Hero Illustration: Cleo, Luna, and Mills Together Under Blinking Stars + Corner Café -->
+          <div class="lg:col-span-6 flex justify-center" data-parallax="-0.14">
+            <div class="comic-card bg-paper p-3.5 w-full max-w-lg text-ink float-gentle">
+              <div class="rounded-2xl overflow-hidden border-2 border-ink bg-[#F5ECD9] aspect-[16/11] relative flex items-center justify-center">
+                <img data-config-img="heroGroup" alt="Cleo, Luna, and Mills together under blinking stars near the corner café" class="hidden w-full h-full object-cover" />
+                <svg data-fallback-for="heroGroup" viewBox="0 0 560 385" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#1E2B4B"/>
+                      <stop offset="56%" stop-color="#53496C"/>
+                      <stop offset="100%" stop-color="#F6CE8E"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="560" height="385" fill="url(#heroSky)"/>
+                  <!-- Shooting Star & Blinking Stars -->
+                  <line x1="220" y1="54" x2="368" y2="26" stroke="#FFFBF2" stroke-width="3" stroke-linecap="round" opacity="0.88"/>
+                  <circle cx="220" cy="54" r="5" fill="#F0A830"/>
+                  <circle cx="76" cy="48" r="2.5" fill="#FFFBF2" class="twinkle-star"/>
+                  <circle cx="476" cy="52" r="3" fill="#F0A830" class="twinkle-star" style="--tw-delay:0.8s"/>
+                  <circle cx="152" cy="88" r="2.2" fill="#FFFBF2" class="twinkle-star" style="--tw-delay:1.5s"/>
+                  <circle cx="430" cy="96" r="2.2" fill="#FFFBF2" class="twinkle-star" style="--tw-delay:0.4s"/>
+
+                  <!-- Cozy Corner Café Silhouette in Background Left -->
+                  <g transform="translate(18,176)" stroke="#2B2320" stroke-width="2.6">
+                    <rect x="0" y="34" width="112" height="72" rx="12" fill="#FAF3E6"/>
+                    <rect x="28" y="20" width="56" height="18" rx="4" fill="#2B2320"/>
+                    <text x="56" y="32" text-anchor="middle" fill="#FFFBF2" font-family="Fredoka, sans-serif" font-size="9.5" stroke="none">COFFEE</text>
+                    <rect x="42" y="54" width="56" height="34" rx="5" fill="#F0A830" opacity="0.88"/>
+                    <rect x="12" y="56" width="22" height="48" rx="4" fill="#7D4933"/>
+                  </g>
+
+                  <!-- Rolling Green Hill -->
+                  <path d="M0 294 Q280 238 560 294 L560 385 L0 385 Z" fill="#58896B" stroke="#2B2320" stroke-width="3.5"/>
+                  <circle cx="68" cy="340" r="5" fill="#F0A830"/>
+                  <circle cx="496" cy="336" r="5" fill="#FFFBF2"/>
+                  <circle cx="142" cy="360" r="4" fill="#FFFBF2"/>
+
+                  <!-- CLEO (Left): Shy brown-and-white dog in oversized blue hoodie & yellow sneakers -->
+                  <g transform="translate(88,142)" stroke="#2B2320" stroke-width="3.2" stroke-linejoin="round">
+                    <path d="M22 145 Q-2 135 4 114 Q16 122 28 134 Z" fill="#9E572E"/>
+                    <rect x="38" y="156" width="16" height="30" rx="5" fill="#9E572E"/>
+                    <rect x="66" y="156" width="16" height="30" rx="5" fill="#9E572E"/>
+                    <rect x="30" y="178" width="28" height="16" rx="7" fill="#F0A830"/>
+                    <rect x="62" y="178" width="28" height="16" rx="7" fill="#F0A830"/>
+                    <line x1="34" y1="190" x2="54" y2="190" stroke="#FFFBF2" stroke-width="2.5"/>
+                    <line x1="66" y1="190" x2="86" y2="190" stroke="#FFFBF2" stroke-width="2.5"/>
+                    <path d="M24 96 Q60 82 96 96 L102 162 Q60 172 18 162 Z" fill="#2D6CDF"/>
+                    <rect x="38" y="130" width="44" height="22" rx="8" fill="#2255B5"/>
+                    <line x1="50" y1="98" x2="48" y2="120" stroke="#FFFBF2" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="70" y1="98" x2="72" y2="120" stroke="#FFFBF2" stroke-width="3" stroke-linecap="round"/>
+                    <ellipse cx="22" cy="64" rx="14" ry="29" transform="rotate(14 22 64)" fill="#6E3618"/>
+                    <ellipse cx="98" cy="64" rx="14" ry="29" transform="rotate(-14 98 64)" fill="#6E3618"/>
+                    <circle cx="60" cy="56" r="33" fill="#A65C32"/>
+                    <path d="M54 24 Q60 44 60 56 Q60 44 66 24 Z" fill="#FFFBF2" stroke="none"/>
+                    <ellipse cx="60" cy="67" rx="22" ry="16" fill="#FFFBF2" stroke="none"/>
+                    <circle cx="47" cy="56" r="4.8" fill="#2B2320" stroke="none"/>
+                    <circle cx="45.5" cy="54.5" r="1.6" fill="#FFF" stroke="none"/>
+                    <circle cx="73" cy="56" r="4.8" fill="#2B2320" stroke="none"/>
+                    <circle cx="71.5" cy="54.5" r="1.6" fill="#FFF" stroke="none"/>
+                    <ellipse cx="38" cy="65" rx="5" ry="2.8" fill="#E88B72" opacity="0.7" stroke="none"/>
+                    <ellipse cx="82" cy="65" rx="5" ry="2.8" fill="#E88B72" opacity="0.7" stroke="none"/>
+                    <ellipse cx="60" cy="64" rx="6" ry="4" fill="#2B2320" stroke="none"/>
+                    <path d="M53 73 Q60 79 67 73" fill="none" stroke="#2B2320" stroke-width="2.5" stroke-linecap="round"/>
+                  </g>
+
+                  <!-- LUNA (Center): Warm panda in maroon knit sweater, round glasses & red flower hairclip -->
+                  <g transform="translate(220,136)" stroke="#2B2320" stroke-width="3.2" stroke-linejoin="round">
+                    <rect x="38" y="160" width="16" height="32" rx="6" fill="#2B2320"/>
+                    <rect x="66" y="160" width="16" height="32" rx="6" fill="#2B2320"/>
+                    <ellipse cx="45" cy="193" rx="13" ry="7" fill="#B53345"/>
+                    <ellipse cx="75" cy="193" rx="13" ry="7" fill="#B53345"/>
+                    <path d="M24 98 Q60 86 96 98 L102 164 Q60 172 18 164 Z" fill="#8E2C3E"/>
+                    <line x1="22" y1="154" x2="98" y2="154" stroke="#6B1C28" stroke-width="3"/>
+                    <circle cx="30" cy="30" r="15" fill="#2B2320"/>
+                    <circle cx="90" cy="30" r="15" fill="#2B2320"/>
+                    <ellipse cx="60" cy="58" rx="36" ry="31" fill="#FFFBF2"/>
+                    <g transform="translate(39,34)" stroke="none">
+                      <circle cx="0" cy="-4.5" r="4.2" fill="#C93B4B"/>
+                      <circle cx="4.5" cy="0" r="4.2" fill="#C93B4B"/>
+                      <circle cx="0" cy="4.5" r="4.2" fill="#C93B4B"/>
+                      <circle cx="-4.5" cy="0" r="4.2" fill="#C93B4B"/>
+                      <circle cx="0" cy="0" r="2.2" fill="#F0A830"/>
+                    </g>
+                    <ellipse cx="45" cy="58" rx="11" ry="9" transform="rotate(-10 45 58)" fill="#2B2320" stroke="none"/>
+                    <ellipse cx="75" cy="58" rx="11" ry="9" transform="rotate(10 75 58)" fill="#2B2320" stroke="none"/>
+                    <circle cx="46" cy="57" r="4" fill="#FFF" stroke="none"/>
+                    <circle cx="47" cy="57" r="2.2" fill="#2B2320" stroke="none"/>
+                    <circle cx="74" cy="57" r="4" fill="#FFF" stroke="none"/>
+                    <circle cx="75" cy="57" r="2.2" fill="#2B2320" stroke="none"/>
+                    <circle cx="45" cy="58" r="13" fill="none" stroke="#7A4C2A" stroke-width="2.6"/>
+                    <circle cx="75" cy="58" r="13" fill="none" stroke="#7A4C2A" stroke-width="2.6"/>
+                    <line x1="58" y1="58" x2="62" y2="58" stroke="#7A4C2A" stroke-width="2.6"/>
+                    <ellipse cx="36" cy="69" rx="5" ry="2.8" fill="#E88B72" opacity="0.65" stroke="none"/>
+                    <ellipse cx="84" cy="69" rx="5" ry="2.8" fill="#E88B72" opacity="0.65" stroke="none"/>
+                    <polygon points="56,67 64,67 60,72" fill="#2B2320" stroke="none"/>
+                    <path d="M54 76 Q60 81 66 76" fill="none" stroke="#2B2320" stroke-width="2.4" stroke-linecap="round"/>
+                  </g>
+
+                  <!-- MILLS (Right): Cool gray cat in black leather jacket, white tee & blue jeans -->
+                  <g transform="translate(352,130)" stroke="#2B2320" stroke-width="3.2" stroke-linejoin="round">
+                    <path d="M94 150 Q124 148 122 118 Q112 126 94 138 Z" fill="#6F7580"/>
+                    <rect x="38" y="160" width="18" height="36" rx="5" fill="#3B6AA8"/>
+                    <rect x="64" y="160" width="18" height="36" rx="5" fill="#3B6AA8"/>
+                    <rect x="34" y="188" width="24" height="12" rx="5" fill="#323B4B"/>
+                    <rect x="62" y="188" width="24" height="12" rx="5" fill="#323B4B"/>
+                    <path d="M24 98 Q60 88 96 98 L100 162 L20 162 Z" fill="#2A2F38"/>
+                    <polygon points="48,94 72,94 69,162 51,162" fill="#FFFBF2"/>
+                    <polygon points="28,50 35,14 55,34" fill="#6F7580"/>
+                    <polygon points="34,42 38,24 49,34" fill="#E89A8A" stroke="none"/>
+                    <polygon points="92,50 85,14 65,34" fill="#6F7580"/>
+                    <polygon points="86,42 82,24 71,34" fill="#E89A8A" stroke="none"/>
+                    <ellipse cx="60" cy="60" rx="34" ry="27" fill="#6F7580"/>
+                    <ellipse cx="60" cy="73" rx="22" ry="13" fill="#F4EDE2" stroke="none"/>
+                    <ellipse cx="46" cy="56" rx="6.5" ry="5.5" fill="#FFF"/>
+                    <circle cx="47" cy="56" r="3.4" fill="#2B2320" stroke="none"/>
+                    <ellipse cx="74" cy="56" rx="6.5" ry="5.5" fill="#FFF"/>
+                    <circle cx="75" cy="56" r="3.4" fill="#2B2320" stroke="none"/>
+                    <polygon points="56,65 64,65 60,70" fill="#E07672" stroke-width="1.5"/>
+                    <path d="M52 75 Q61 81 70 73" fill="none" stroke="#2B2320" stroke-width="2.4" stroke-linecap="round"/>
+                  </g>
+                </svg>
+              </div>
+              <p class="font-display text-center text-sm text-ink/85 mt-2.5">
+                Meet <strong>Cleo</strong>, <strong>Luna</strong>, and <strong>Mills</strong> — learning to drop borrowed standards together.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Card Overview: The Heart of FEELAUTHIA -->
+      <div class="space-y-5">
+        <div class="text-center max-w-2xl mx-auto">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold uppercase tracking-wider mb-2">
+            What Is FEELAUTHIA?
+          </span>
+          <h2 class="font-display font-bold text-3xl text-ink">A Gentle Mirror, Never Fake Positivity</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <article class="comic-card p-6 space-y-2.5 bg-[#EFF5FF]">
+            <span class="w-12 h-12 rounded-2xl bg-cleo text-white border-2 border-ink shadow-[2.5px_2.5px_0_#2B2320] flex items-center justify-center text-2xl">💛</span>
+            <h3 class="font-display font-bold text-xl text-cleo">Honest Emotional Validation</h3>
+            <p class="text-sm text-ink/85 leading-relaxed">
+              We turn invisible struggles—like tangled overthinking, drooping ears, and comparing your behind-the-scenes to others' highlight reels—into warm stories that never demand you be perfect.
+            </p>
+          </article>
+
+          <article class="comic-card p-6 space-y-2.5 bg-[#FCEEF0]">
+            <span class="w-12 h-12 rounded-2xl bg-luna text-white border-2 border-ink shadow-[2.5px_2.5px_0_#2B2320] flex items-center justify-center text-2xl">🧠</span>
+            <h3 class="font-display font-bold text-xl text-luna">Real Psychology Made Gentle</h3>
+            <p class="text-sm text-ink/85 leading-relaxed">
+              Rooted in accessible ideas from Polyvagal Theory, ACT, Self-Compassion, Social Comparison Theory, and CBT—translated into cozy conversations with Cleo, Luna, and Mills.
+            </p>
+          </article>
+
+          <article class="comic-card p-6 space-y-2.5 bg-[#FFF4E8]">
+            <span class="w-12 h-12 rounded-2xl bg-amberWarm text-white border-2 border-ink shadow-[2.5px_2.5px_0_#2B2320] flex items-center justify-center text-2xl">🧩</span>
+            <h3 class="font-display font-bold text-xl text-amberWarm">Practical Grounding Tools</h3>
+            <p class="text-sm text-ink/85 leading-relaxed">
+              FEELAUTHIA steps off the screen and into your hands through our 144-page guided Journaling Book and tactile Sensory Keyboard Keychain for real-time anxiety relief.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Interactive Daily Quote from the Café -->
+      <div class="comic-card bg-[#FFF6E1] p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2.5 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-night text-gold font-display text-xs font-bold border-2 border-ink">☕ Daily Quote from the Café</span>
+              <span id="quote-tag" class="px-3 py-1 rounded-full bg-card text-ink font-display text-xs font-bold border-2 border-ink">Small Courage</span>
+            </div>
+            <blockquote id="quote-body" class="font-display font-medium text-xl sm:text-2xl text-ink leading-snug">
+              "Hi. I almost didn't open this. If you're here, that already counts as a small brave thing."
+            </blockquote>
+            <p id="quote-speaker" class="font-bold text-sm text-cleo">— Cleo, The Insecure Light</p>
+          </div>
+          <div class="flex flex-wrap gap-2.5 shrink-0">
+            <button id="btn-copy-quote" type="button" class="comic-btn bg-card text-ink font-display font-semibold px-4 py-2.5 rounded-full text-sm inline-flex items-center gap-1.5">
+              <span>📋</span> Copy Quote
+            </button>
+            <button id="btn-next-quote" type="button" class="comic-btn bg-gold text-ink font-display font-bold px-5 py-2.5 rounded-full text-sm inline-flex items-center gap-1.5">
+              <span>🔀</span> Another Quote
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Visual Guide Cards to Jump to Other Pages -->
+      <div class="space-y-4">
+        <h2 class="font-display font-bold text-2xl text-ink text-center">Pick Your Door Inside FEELAUTHIA</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+          <a href="#story" data-route="story" class="comic-btn bg-card p-4 rounded-2xl text-left flex flex-col justify-between gap-2">
+            <span class="text-2xl">📖</span>
+            <div>
+              <strong class="font-display text-base text-cleo block">Visual Novel</strong>
+              <span class="text-xs text-ink/75">Scroll the 6-chapter illustrated story</span>
+            </div>
+          </a>
+          <a href="#products" data-route="products" class="comic-btn bg-card p-4 rounded-2xl text-left flex flex-col justify-between gap-2">
+            <span class="text-2xl">📓</span>
+            <div>
+              <strong class="font-display text-base text-luna block">Our Products</strong>
+              <span class="text-xs text-ink/75">Journal flipbook &amp; tactile keychain</span>
+            </div>
+          </a>
+          <a href="#game" data-route="game" class="comic-btn bg-card p-4 rounded-2xl text-left flex flex-col justify-between gap-2">
+            <span class="text-2xl">🎮</span>
+            <div>
+              <strong class="font-display text-base text-amberWarm block">Mini-Game</strong>
+              <span class="text-xs text-ink/75">Escape the Overthinking Circle</span>
+            </div>
+          </a>
+          <a href="#behind" data-route="behind" class="comic-btn bg-card p-4 rounded-2xl text-left flex flex-col justify-between gap-2">
+            <span class="text-2xl">👋</span>
+            <div>
+              <strong class="font-display text-base text-sage block">Behind Feelauthia</strong>
+              <span class="text-xs text-ink/75">Meet the 3 creators &amp; ethics</span>
+            </div>
+          </a>
+          <a href="#feedback" data-route="feedback" class="comic-btn bg-card p-4 rounded-2xl text-left flex flex-col justify-between gap-2 sm:col-span-2 lg:col-span-1">
+            <span class="text-2xl">💌</span>
+            <div>
+              <strong class="font-display text-base text-mills block">Feedback</strong>
+              <span class="text-xs text-ink/75">Help shape future chapters</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Page 1 Pagination Bar -->
+      <div class="comic-card-sm bg-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#feedback" data-route="feedback" class="comic-btn bg-paper text-ink font-display font-bold px-5 py-3 rounded-full text-sm w-full sm:w-auto text-center">
+          ← Previous Page: Feedback
+        </a>
+        <span class="font-display text-xs font-bold uppercase tracking-wider text-ink/70 px-3 py-1 rounded-full bg-paperDeep border border-ink/25">
+          Page 1 of 6 · Home
+        </span>
+        <a href="#story" data-route="story" class="comic-btn bg-cleo text-white font-display font-bold px-6 py-3 rounded-full text-sm sm:text-base w-full sm:w-auto text-center">
+          Next Page: Visual Novel →
+        </a>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PAGE 2 OF 6: VISUAL NOVEL (#story) — Scroll-Based Illustrated Graphic Story
+         ======================================================================= -->
+    <section id="page-story" class="page-view mx-auto max-w-4xl space-y-10" data-page="story">
+
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-cleo text-white border-2 border-ink font-display text-xs font-bold uppercase tracking-wider">
+          Page 2 · Scroll-Based Graphic Novel
+        </span>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-ink">The FEELAUTHIA Story</h1>
+        <p class="text-ink/80 text-sm sm:text-base">
+          Scroll down gently through six illustrated storybook chapters—pure story, honest moments, and cozy visuals.
+        </p>
+      </div>
+
+      <!-- Quick Character Cast Strip -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="comic-card-sm bg-[#EFF5FF] p-4 flex items-center gap-3.5">
+          <div class="w-14 h-14 rounded-2xl bg-card border-2 border-ink overflow-hidden shrink-0 flex items-center justify-center p-1">
+            <img data-config-img="cleo" alt="Cleo" class="hidden w-full h-full object-contain" />
+            <svg data-fallback-for="cleo" viewBox="0 0 80 80" class="w-full h-full">
+              <ellipse cx="16" cy="44" rx="8" ry="18" fill="#6E3618" stroke="#2B2320" stroke-width="2.5"/>
+              <ellipse cx="64" cy="44" rx="8" ry="18" fill="#6E3618" stroke="#2B2320" stroke-width="2.5"/>
+              <path d="M18 62 Q40 54 62 62 L65 80 L15 80 Z" fill="#2D6CDF" stroke="#2B2320" stroke-width="2.5"/>
+              <circle cx="40" cy="36" r="20" fill="#A65C32" stroke="#2B2320" stroke-width="2.5"/>
+              <ellipse cx="40" cy="43" rx="13" ry="9" fill="#FFFBF2"/>
+              <circle cx="32" cy="35" r="3" fill="#2B2320"/>
+              <circle cx="48" cy="35" r="3" fill="#2B2320"/>
+              <ellipse cx="40" cy="41" rx="3.8" ry="2.5" fill="#2B2320"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-base text-cleo">Cleo</h2>
+            <p class="text-xs text-ink/80 leading-snug"><strong>The Insecure Light.</strong> Shy dog in an oversized blue hoodie whose ears droop when overthinking strikes.</p>
+          </div>
+        </div>
+
+        <div class="comic-card-sm bg-[#FCEEF0] p-4 flex items-center gap-3.5">
+          <div class="w-14 h-14 rounded-2xl bg-card border-2 border-ink overflow-hidden shrink-0 flex items-center justify-center p-1">
+            <img data-config-img="luna" alt="Luna" class="hidden w-full h-full object-contain" />
+            <svg data-fallback-for="luna" viewBox="0 0 80 80" class="w-full h-full">
+              <circle cx="22" cy="20" r="9" fill="#2B2320"/>
+              <circle cx="58" cy="20" r="9" fill="#2B2320"/>
+              <path d="M18 62 Q40 54 62 62 L65 80 L15 80 Z" fill="#8E2C3E" stroke="#2B2320" stroke-width="2.5"/>
+              <ellipse cx="40" cy="38" rx="22" ry="18" fill="#FFFBF2" stroke="#2B2320" stroke-width="2.5"/>
+              <circle cx="31" cy="38" r="7.5" fill="none" stroke="#7A4C2A" stroke-width="2.2"/>
+              <circle cx="49" cy="38" r="7.5" fill="none" stroke="#7A4C2A" stroke-width="2.2"/>
+              <circle cx="31" cy="38" r="2.6" fill="#2B2320"/>
+              <circle cx="49" cy="38" r="2.6" fill="#2B2320"/>
+              <circle cx="27" cy="23" r="3.5" fill="#C93B4B"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-base text-luna">Luna</h2>
+            <p class="text-xs text-ink/80 leading-snug"><strong>The Grounding Smile.</strong> Warm panda with round glasses who listens gently at the corner café.</p>
+          </div>
+        </div>
+
+        <div class="comic-card-sm bg-[#EEF0F4] p-4 flex items-center gap-3.5">
+          <div class="w-14 h-14 rounded-2xl bg-card border-2 border-ink overflow-hidden shrink-0 flex items-center justify-center p-1">
+            <img data-config-img="mills" alt="Mills" class="hidden w-full h-full object-contain" />
+            <svg data-fallback-for="mills" viewBox="0 0 80 80" class="w-full h-full">
+              <polygon points="18,34 23,12 36,24" fill="#6F7580" stroke="#2B2320" stroke-width="2.5"/>
+              <polygon points="62,34 57,12 44,24" fill="#6F7580" stroke="#2B2320" stroke-width="2.5"/>
+              <path d="M18 62 Q40 54 62 62 L65 80 L15 80 Z" fill="#323B4B" stroke="#2B2320" stroke-width="2.5"/>
+              <ellipse cx="40" cy="39" rx="21" ry="17" fill="#6F7580" stroke="#2B2320" stroke-width="2.5"/>
+              <ellipse cx="40" cy="46" rx="13" ry="8" fill="#F4EDE2"/>
+              <circle cx="32" cy="37" r="2.8" fill="#2B2320"/>
+              <circle cx="48" cy="37" r="2.8" fill="#2B2320"/>
+              <polygon points="37,43 43,43 40,46" fill="#E07672"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-base text-mills">Mills</h2>
+            <p class="text-xs text-ink/80 leading-snug"><strong>The Bright Star.</strong> Charismatic gray cat cousin who loves having fun and reconnecting.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 Scroll-Animated Storybook Chapters -->
+      <div class="space-y-10">
+
+        <!-- CHAPTER 1: THE NOISY MIND -->
+        <article class="vn-panel comic-card overflow-hidden">
+          <div class="aspect-[16/9] bg-[#212D4A] border-b-[3px] border-ink relative overflow-hidden">
+            <img data-config-img="scene1" alt="Chapter 1: The Noisy Mind" class="hidden w-full h-full object-cover" />
+            <svg data-fallback-for="scene1" viewBox="0 0 800 450" class="w-full h-full">
+              <rect width="800" height="450" fill="#212D4A"/>
+              <g fill="none" stroke="#9EB9E8" stroke-width="3.2" opacity="0.55" stroke-linecap="round">
+                <path d="M210 135 C255 50, 360 65, 345 135 C330 200, 445 190, 460 115 C480 45, 580 80, 548 148 C525 205, 625 170, 595 105"/>
+                <path d="M265 162 C305 90, 420 95, 402 168 C392 215, 500 185, 515 125" stroke="#F0A830" opacity="0.72"/>
+              </g>
+              <text x="145" y="102" fill="#FFFBF2" opacity="0.64" font-family="Fredoka, sans-serif" font-size="20">"Am I behind everyone?"</text>
+              <text x="505" y="96" fill="#FFFBF2" opacity="0.64" font-family="Fredoka, sans-serif" font-size="20">"Don't say something awkward..."</text>
+              <rect x="0" y="365" width="800" height="85" fill="#161F34"/>
+              <g transform="translate(328,200)" stroke="#2B2320" stroke-width="3.5">
+                <ellipse cx="72" cy="132" rx="54" ry="52" fill="#2D6CDF"/>
+                <circle cx="72" cy="68" r="48" fill="#2D6CDF"/>
+                <ellipse cx="26" cy="90" rx="14" ry="32" transform="rotate(18 26 90)" fill="#6E3618"/>
+                <ellipse cx="118" cy="90" rx="14" ry="32" transform="rotate(-18 118 90)" fill="#6E3618"/>
+                <circle cx="72" cy="72" r="35" fill="#A65C32"/>
+                <ellipse cx="72" cy="84" rx="22" ry="15" fill="#FFFBF2" stroke="none"/>
+                <path d="M53 70 Q60 76 66 70" fill="none" stroke="#2B2320" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M78 70 Q84 76 91 70" fill="none" stroke="#2B2320" stroke-width="3.2" stroke-linecap="round"/>
+                <ellipse cx="72" cy="80" rx="6.5" ry="4.5" fill="#2B2320"/>
+                <rect x="35" y="158" width="28" height="16" rx="7" fill="#F0A830"/>
+                <rect x="80" y="158" width="28" height="16" rx="7" fill="#F0A830"/>
+              </g>
+            </svg>
+            <span class="absolute top-3 left-3 px-3.5 py-1 rounded-full bg-card text-ink font-display text-xs font-bold border-2 border-ink">
+              Chapter 1 · The Noisy Mind
+            </span>
+          </div>
+          <div class="p-6 sm:p-7 space-y-4">
+            <p class="text-ink/90 text-base sm:text-lg leading-relaxed">
+              Cleo has always felt his world is too noisy—not because of the crowds outside, but because of the tangled voices inside his own head. Whenever anxiety creeps in, his floppy ears droop and he pulls up his oversized blue hoodie as a shield.
+            </p>
+            <div class="comic-card-sm bg-[#EFF5FF] px-5 py-3.5">
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-cleo block mb-0.5">Cleo thinks:</span>
+              <p class="font-display text-lg text-ink">"If I keep my hood up and stay quiet, maybe nobody will notice how loud my thoughts are."</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 2: THE CORNER CAFÉ -->
+        <article class="vn-panel comic-card overflow-hidden">
+          <div class="aspect-[16/9] bg-[#F8E7C5] border-b-[3px] border-ink relative overflow-hidden">
+            <img data-config-img="scene2" alt="Chapter 2: The Corner Café" class="hidden w-full h-full object-cover" />
+            <svg data-fallback-for="scene2" viewBox="0 0 800 450" class="w-full h-full">
+              <rect width="800" height="450" fill="#F8E7C5"/>
+              <rect x="45" y="45" width="320" height="225" rx="16" fill="#FFF8E6" stroke="#2B2320" stroke-width="4"/>
+              <line x1="205" y1="45" x2="205" y2="270" stroke="#2B2320" stroke-width="4"/>
+              <line x1="45" y1="158" x2="365" y2="158" stroke="#2B2320" stroke-width="4"/>
+              <polygon points="85,45 315,45 480,450 185,450" fill="#F0A830" opacity="0.16"/>
+              <rect x="450" y="92" width="265" height="14" rx="5" fill="#8E593C" stroke="#2B2320" stroke-width="3"/>
+              <rect x="495" y="56" width="32" height="36" rx="6" fill="#58896B" stroke="#2B2320" stroke-width="2.5"/>
+              <circle cx="511" cy="48" r="14" fill="#77AA88" stroke="#2B2320" stroke-width="2.5"/>
+              <ellipse cx="320" cy="376" rx="175" ry="44" fill="#C96B36" stroke="#2B2320" stroke-width="4"/>
+              <rect x="236" y="330" width="36" height="32" rx="7" fill="#FFFBF2" stroke="#2B2320" stroke-width="3"/>
+              <g transform="translate(275,165)" stroke="#2B2320" stroke-width="3.5">
+                <circle cx="30" cy="34" r="18" fill="#2B2320"/>
+                <circle cx="110" cy="34" r="18" fill="#2B2320"/>
+                <path d="M26 118 Q70 98 114 118 L120 185 L20 185 Z" fill="#8E2C3E"/>
+                <ellipse cx="70" cy="70" rx="45" ry="38" fill="#FFFBF2"/>
+                <ellipse cx="52" cy="70" rx="13" ry="10" fill="#2B2320"/>
+                <ellipse cx="88" cy="70" rx="13" ry="10" fill="#2B2320"/>
+                <circle cx="54" cy="70" r="4" fill="#FFF" stroke="none"/>
+                <circle cx="86" cy="70" r="4" fill="#FFF" stroke="none"/>
+                <circle cx="52" cy="70" r="15" fill="none" stroke="#7A4C2A" stroke-width="3"/>
+                <circle cx="88" cy="70" r="15" fill="none" stroke="#7A4C2A" stroke-width="3"/>
+                <path d="M62 90 Q70 96 78 90" fill="none" stroke-width="3" stroke-linecap="round"/>
+                <polygon points="15,175 70,162 125,175 120,205 70,192 20,205" fill="#FFFBF2"/>
+              </g>
+              <rect x="640" y="125" width="160" height="325" fill="#7D4933" stroke="#2B2320" stroke-width="4"/>
+              <g transform="translate(560,208)" stroke="#2B2320" stroke-width="3.5">
+                <path d="M35 110 Q75 95 105 110 L105 240 L35 240 Z" fill="#2D6CDF"/>
+                <ellipse cx="26" cy="70" rx="13" ry="26" fill="#6E3618"/>
+                <circle cx="65" cy="62" r="35" fill="#A65C32"/>
+                <ellipse cx="58" cy="73" rx="22" ry="15" fill="#FFFBF2" stroke="none"/>
+                <circle cx="52" cy="58" r="5" fill="#2B2320" stroke="none"/>
+                <circle cx="74" cy="58" r="5" fill="#2B2320" stroke="none"/>
+                <ellipse cx="58" cy="71" rx="6" ry="4" fill="#2B2320" stroke="none"/>
+                <path d="M52 80 Q62 86 70 80" fill="none" stroke-width="3" stroke-linecap="round"/>
+              </g>
+            </svg>
+            <span class="absolute top-3 left-3 px-3.5 py-1 rounded-full bg-card text-ink font-display text-xs font-bold border-2 border-ink">
+              Chapter 2 · The Corner Café
+            </span>
+          </div>
+          <div class="p-6 sm:p-7 space-y-4">
+            <p class="text-ink/90 text-base sm:text-lg leading-relaxed">
+              The one place that calms Cleo's noisy mind is a small corner café. There, Luna sits with a book and a warm drink—bringing a quiet warmth that never asks Cleo to pretend or perform.
+            </p>
+            <div class="comic-card-sm bg-[#FCEEF0] px-5 py-3.5">
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-luna block mb-0.5">Luna smiles:</span>
+              <p class="font-display text-lg text-ink">"Saved your usual corner chair, Cleo. Keep a warm drink nearby—no need to rush the silence."</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 3: ENTER THE BRIGHT STAR -->
+        <article class="vn-panel comic-card overflow-hidden">
+          <div class="aspect-[16/9] bg-[#F5DEBD] border-b-[3px] border-ink relative overflow-hidden">
+            <img data-config-img="scene3" alt="Chapter 3: Enter the Bright Star" class="hidden w-full h-full object-cover" />
+            <svg data-fallback-for="scene3" viewBox="0 0 800 450" class="w-full h-full">
+              <rect width="800" height="450" fill="#F5DEBD"/>
+              <circle cx="400" cy="180" r="145" fill="#F0A830" opacity="0.25"/>
+              <path class="twinkle-star" d="M312 78l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#F0A830"/>
+              <path class="twinkle-star" style="--tw-delay:0.9s" d="M492 75l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#F0A830"/>
+              <g transform="translate(110,195)" stroke="#2B2320" stroke-width="3.5">
+                <circle cx="30" cy="30" r="16" fill="#2B2320"/>
+                <circle cx="100" cy="30" r="16" fill="#2B2320"/>
+                <path d="M24 115 Q65 98 106 115 L112 220 L18 220 Z" fill="#8E2C3E"/>
+                <ellipse cx="65" cy="66" rx="42" ry="34" fill="#FFFBF2"/>
+                <circle cx="50" cy="64" r="12" fill="none" stroke="#7A4C2A" stroke-width="3"/>
+                <circle cx="80" cy="64" r="12" fill="none" stroke="#7A4C2A" stroke-width="3"/>
+                <path d="M56 84 Q65 92 74 84" fill="none" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <g transform="translate(315,125)" stroke="#2B2320" stroke-width="3.5">
+                <polygon points="35,62 45,15 72,42" fill="#6F7580"/>
+                <polygon points="135,62 125,15 98,42" fill="#6F7580"/>
+                <path d="M32 135 Q85 118 138 135 L146 280 L24 280 Z" fill="#323B4B"/>
+                <polygon points="68,128 102,128 96,280 74,280" fill="#FFFBF2"/>
+                <ellipse cx="85" cy="80" rx="48" ry="38" fill="#6F7580"/>
+                <ellipse cx="85" cy="96" rx="30" ry="18" fill="#F4EDE2" stroke="none"/>
+                <circle cx="67" cy="74" r="6" fill="#2B2320" stroke="none"/>
+                <circle cx="103" cy="74" r="6" fill="#2B2320" stroke="none"/>
+                <path d="M70 98 Q85 112 100 98 Z" fill="#D96B6B"/>
+              </g>
+              <g transform="translate(570,225) scale(0.88)" stroke="#2B2320" stroke-width="3.5">
+                <path d="M30 110 Q70 95 110 110 L114 220 L26 220 Z" fill="#2D6CDF"/>
+                <ellipse cx="28" cy="75" rx="13" ry="28" fill="#6E3618"/>
+                <ellipse cx="112" cy="75" rx="13" ry="28" fill="#6E3618"/>
+                <circle cx="70" cy="64" r="35" fill="#A65C32"/>
+                <ellipse cx="70" cy="76" rx="22" ry="15" fill="#FFFBF2" stroke="none"/>
+                <circle cx="56" cy="62" r="5" fill="#2B2320" stroke="none"/>
+                <circle cx="80" cy="62" r="5" fill="#2B2320" stroke="none"/>
+                <line x1="62" y1="84" x2="78" y2="82" stroke="#2B2320" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <rect x="60" y="365" width="680" height="85" rx="24" fill="#C96B36" stroke="#2B2320" stroke-width="4"/>
+            </svg>
+            <span class="absolute top-3 left-3 px-3.5 py-1 rounded-full bg-card text-ink font-display text-xs font-bold border-2 border-ink">
+              Chapter 3 · Enter the Bright Star
+            </span>
+          </div>
+          <div class="p-6 sm:p-7 space-y-4">
+            <p class="text-ink/90 text-base sm:text-lg leading-relaxed">
+              Then Cleo's charismatic cousin Mills arrives—effortlessly expressive, confident, and quick to light up the room. Watching Mills chat so easily with Luna, Cleo suddenly feels himself shrinking right beside them.
+            </p>
+            <div class="comic-card-sm bg-[#EEF0F4] px-5 py-3.5">
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-mills block mb-0.5">Mills grins:</span>
+              <p class="font-display text-lg text-ink">"This café is awesome! Come on Cleo, tell Luna that wild story from last summer!"</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 4: THE SHADOW OF COMPARISON -->
+        <article class="vn-panel comic-card overflow-hidden">
+          <div class="aspect-[16/9] bg-[#1A2134] border-b-[3px] border-ink relative overflow-hidden">
+            <img data-config-img="scene4" alt="Chapter 4: The Shadow of Comparison" class="hidden w-full h-full object-cover" />
+            <svg data-fallback-for="scene4" viewBox="0 0 800 450" class="w-full h-full">
+              <rect width="800" height="450" fill="#1A2134"/>
+              <rect x="520" y="60" width="180" height="200" rx="10" fill="#2A395D" stroke="#2B2320" stroke-width="4"/>
+              <line x1="610" y1="60" x2="610" y2="260" stroke="#2B2320" stroke-width="3.5"/>
+              <line x1="520" y1="160" x2="700" y2="160" stroke="#2B2320" stroke-width="3.5"/>
+              <polygon points="520,260 700,260 540,450 260,450" fill="#88A8E6" opacity="0.11"/>
+              <rect x="115" y="295" width="155" height="155" fill="#323B4B" stroke="#2B2320" stroke-width="3.5"/>
+              <rect x="165" y="255" width="56" height="38" rx="6" fill="#DCE9FF" stroke="#2B2320" stroke-width="3"/>
+              <text x="193" y="278" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="11" fill="#2D6CDF">3 unread</text>
+              <g transform="translate(310,205)" stroke="#2B2320" stroke-width="3.5">
+                <ellipse cx="95" cy="148" rx="68" ry="56" fill="#2253A8"/>
+                <circle cx="95" cy="86" r="46" fill="#2D6CDF"/>
+                <ellipse cx="52" cy="102" rx="14" ry="30" fill="#633015"/>
+                <ellipse cx="138" cy="102" rx="14" ry="30" fill="#633015"/>
+                <circle cx="95" cy="94" r="32" fill="#9A542C"/>
+                <path d="M77 97 Q85 92 91 97" fill="none" stroke-width="3" stroke-linecap="round"/>
+                <path d="M99 97 Q105 92 113 97" fill="none" stroke-width="3" stroke-linecap="round"/>
+              </g>
+            </svg>
+            <span class="absolute top-3 left-3 px-3.5 py-1 rounded-full bg-card text-ink font-display text-xs font-bold border-2 border-ink">
+              Chapter 4 · The Shadow of Comparison
+            </span>
+          </div>
+          <div class="p-6 sm:p-7 space-y-4">
+            <p class="text-ink/90 text-base sm:text-lg leading-relaxed">
+              Cleo tries to copy Mills—faking louder jokes, borrowed outfits, and forced swagger. Yet the harder he tries to wear someone else's identity, the more exhausted and alienated he feels, slowly retreating to his quiet room.
+            </p>
+            <div class="comic-card-sm bg-[#EFF5FF] px-5 py-3.5">
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-cleo block mb-0.5">Cleo whispers:</span>
+              <p class="font-display text-lg text-ink">"Why can't I be as cool as him? The harder I pretend, the smaller I feel."</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 5: AN HONEST CONVERSATION -->
+        <article class="vn-panel comic-card overflow-hidden">
+          <div class="aspect-[16/9] bg-[#FDEBD2] border-b-[3px] border-ink relative overflow-hidden">
+            <img data-config-img="scene5" alt="Chapter 5: An Honest Conversation" class="hidden w-full h-full object-cover" />
+            <svg data-fallback-for="scene5" viewBox="0 0 800 450" class="w-full h-full">
+              <rect width="800" height="450" fill="#FDEBD2"/>
+              <circle cx="400" cy="240" r="215" fill="#F0A830" opacity="0.22"/>
+              <g transform="translate(160,155)" stroke="#2B2320" stroke-width="3.5">
+                <circle cx="38" cy="36" r="18" fill="#2B2320"/>
+                <circle cx="118" cy="36" r="18" fill="#2B2320"/>
+                <path d="M28 128 Q78 108 128 128 L135 235 L20 235 Z" fill="#8E2C3E"/>
+                <ellipse cx="78" cy="76" rx="48" ry="40" fill="#FFFBF2"/>
+                <circle cx="60" cy="75" r="14" fill="none" stroke="#7A4C2A" stroke-width="3"/>
+                <circle cx="96" cy="75" r="14" fill="none" stroke="#7A4C2A" stroke-width="3"/>
+                <circle cx="62" cy="75" r="4.5" fill="#2B2320" stroke="none"/>
+                <circle cx="98" cy="75" r="4.5" fill="#2B2320" stroke="none"/>
+                <path d="M68 97 Q78 104 88 97" fill="none" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <g transform="translate(475,165)" stroke="#2B2320" stroke-width="3.5">
+                <ellipse cx="26" cy="78" rx="14" ry="30" fill="#6E3618"/>
+                <ellipse cx="122" cy="78" rx="14" ry="30" fill="#6E3618"/>
+                <path d="M30 122 Q74 106 118 122 L124 225 L24 225 Z" fill="#2D6CDF"/>
+                <circle cx="74" cy="70" r="40" fill="#A65C32"/>
+                <ellipse cx="74" cy="84" rx="25" ry="17" fill="#FFFBF2" stroke="none"/>
+                <circle cx="59" cy="68" r="5.5" fill="#2B2320" stroke="none"/>
+                <circle cx="89" cy="68" r="5.5" fill="#2B2320" stroke="none"/>
+                <ellipse cx="74" cy="80" rx="6.5" ry="4.5" fill="#2B2320" stroke="none"/>
+                <path d="M66 91 Q74 96 82 91" fill="none" stroke-width="2.8" stroke-linecap="round"/>
+              </g>
+              <rect x="80" y="365" width="640" height="85" rx="22" fill="#C96B36" stroke="#2B2320" stroke-width="4"/>
+              <rect x="335" y="330" width="38" height="36" rx="8" fill="#FFFBF2" stroke="#2B2320" stroke-width="3"/>
+              <rect x="425" y="330" width="38" height="36" rx="8" fill="#FFFBF2" stroke="#2B2320" stroke-width="3"/>
+            </svg>
+            <span class="absolute top-3 left-3 px-3.5 py-1 rounded-full bg-card text-ink font-display text-xs font-bold border-2 border-ink">
+              Chapter 5 · An Honest Conversation
+            </span>
+          </div>
+          <div class="p-6 sm:p-7 space-y-4">
+            <p class="text-ink/90 text-base sm:text-lg leading-relaxed">
+              Luna notices Cleo pulling away and sits down with him. She doesn't talk about how cool Mills is—instead, she gently reminds Cleo that what she valued from the very beginning was his quiet sincerity and calm, never a performance.
+            </p>
+            <div class="comic-card-sm bg-[#FCEEF0] px-5 py-3.5">
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-luna block mb-0.5">Luna says gently:</span>
+              <p class="font-display text-lg text-ink">"I didn't miss a louder version of you, Cleo. What I liked from the start was your sincerity and calm."</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 6: LOWERING THE HOODIE -->
+        <article class="vn-panel comic-card overflow-hidden">
+          <div class="aspect-[16/9] bg-night border-b-[3px] border-ink relative overflow-hidden">
+            <img data-config-img="scene6" alt="Chapter 6: Lowering the Hoodie" class="hidden w-full h-full object-cover" />
+            <svg data-fallback-for="scene6" viewBox="0 0 800 450" class="w-full h-full">
+              <defs>
+                <linearGradient id="vnEndSky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#17213A"/>
+                  <stop offset="100%" stop-color="#2E4C86"/>
+                </linearGradient>
+              </defs>
+              <rect width="800" height="450" fill="url(#vnEndSky)"/>
+              <line x1="355" y1="125" x2="545" y2="82" stroke="#FFFBF2" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+              <circle cx="355" cy="125" r="7" fill="#F0A830"/>
+              <circle cx="355" cy="125" r="20" fill="#F0A830" opacity="0.28"/>
+              <path class="twinkle-star" d="M160 80l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#FFFBF2"/>
+              <path class="twinkle-star" style="--tw-delay:1.2s" d="M650 95l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#F0A830"/>
+              <path d="M0 320 Q400 245 800 320 L800 450 L0 450 Z" fill="#58896B" stroke="#2B2320" stroke-width="4"/>
+              <g transform="translate(230,225)" stroke="#2B2320" stroke-width="3.5">
+                <ellipse cx="48" cy="110" rx="40" ry="44" fill="#8E2C3E"/>
+                <circle cx="24" cy="24" r="14" fill="#2B2320"/>
+                <circle cx="72" cy="24" r="14" fill="#2B2320"/>
+                <circle cx="48" cy="52" r="34" fill="#FFFBF2"/>
+                <circle cx="33" cy="34" r="6" fill="#C93B4B" stroke="none"/>
+              </g>
+              <g transform="translate(352,212)" stroke="#2B2320" stroke-width="3.5">
+                <polygon points="22,42 26,8 48,30" fill="#6F7580"/>
+                <polygon points="74,42 70,8 48,30" fill="#6F7580"/>
+                <path d="M16 90 Q48 78 80 90 L86 155 L10 155 Z" fill="#323B4B"/>
+                <circle cx="48" cy="56" r="32" fill="#6F7580"/>
+              </g>
+              <g transform="translate(468,225)" stroke="#2B2320" stroke-width="3.5">
+                <ellipse cx="48" cy="112" rx="38" ry="42" fill="#2D6CDF"/>
+                <path d="M22 86 Q48 102 74 86 Q68 72 48 72 Q28 72 22 86 Z" fill="#1E52B3"/>
+                <ellipse cx="18" cy="58" rx="12" ry="26" fill="#6E3618"/>
+                <ellipse cx="78" cy="58" rx="12" ry="26" fill="#6E3618"/>
+                <circle cx="48" cy="50" r="32" fill="#A65C32"/>
+              </g>
+            </svg>
+            <span class="absolute top-3 left-3 px-3.5 py-1 rounded-full bg-gold text-ink font-display text-xs font-bold border-2 border-ink">
+              Chapter 6 · Lowering the Hoodie
+            </span>
+          </div>
+          <div class="p-6 sm:p-7 space-y-4">
+            <p class="text-ink/90 text-base sm:text-lg leading-relaxed">
+              Cleo finally realizes the truth: Mills was never the enemy—Mills was simply being himself. The real adversary was the unrealistic standards inside Cleo's head. Lowering his hoodie doesn't make Cleo fearless; it lets him meet his own light honestly.
+            </p>
+            <div class="comic-card-sm bg-[#FFF6E1] px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span class="font-display text-xs font-bold uppercase tracking-wider text-amberWarm block mb-0.5">To Be Continued...</span>
+                <p class="font-display text-lg text-ink">"We just need to stop hiding from the light that is already inside us."</p>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold shrink-0 self-start sm:self-center">✨ End of Arc 1</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Page 2 Pagination Bar -->
+      <div class="comic-card-sm bg-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#home" data-route="home" class="comic-btn bg-paper text-ink font-display font-bold px-5 py-3 rounded-full text-sm w-full sm:w-auto text-center">
+          ← Previous Page: Home
+        </a>
+        <span class="font-display text-xs font-bold uppercase tracking-wider text-ink/70 px-3 py-1 rounded-full bg-paperDeep border border-ink/25">
+          Page 2 of 6 · Visual Novel
+        </span>
+        <a href="#products" data-route="products" class="comic-btn bg-luna text-white font-display font-bold px-6 py-3 rounded-full text-sm sm:text-base w-full sm:w-auto text-center">
+          Next Page: Our Products →
+        </a>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PAGE 3 OF 6: OUR PRODUCTS (#products) — Journaling Book & Keyboard Keychain
+         ======================================================================= -->
+    <section id="page-products" class="page-view mx-auto max-w-6xl space-y-12" data-page="products">
+
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-luna text-white border-2 border-ink font-display text-xs font-bold uppercase tracking-wider">
+          Page 3 · Real-World Grounding Companions
+        </span>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-ink">Our Products</h1>
+        <p class="text-ink/80 text-sm sm:text-base">
+          Tangible FEELAUTHIA tools crafted to turn quiet reflection and tactile grounding into everyday habits.
+        </p>
+      </div>
+
+      <!-- =====================================================================
+           PRODUCT 1: FEELAUTHIA JOURNALING BOOK
+           ===================================================================== -->
+      <div class="comic-card p-6 sm:p-9 space-y-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- 3D Book Mockup -->
+          <div class="lg:col-span-5 flex justify-center book-stage py-3">
+            <div class="book-3d relative w-64 sm:w-72 aspect-[3/4] rounded-r-2xl rounded-l-md border-[3px] border-ink bg-night shadow-[12px_12px_0_#2B2320] overflow-hidden p-5 text-paper flex flex-col justify-between">
+              <div class="absolute left-0 top-0 bottom-0 w-4 bg-[#12192B] border-r-2 border-ink"></div>
+              <img data-config-img="bookCover" alt="FEELAUTHIA Journaling Book Cover" class="hidden absolute inset-0 w-full h-full object-cover" />
+              <div data-fallback-for="bookCover" class="relative z-10 pl-3 flex flex-col justify-between h-full">
+                <div class="text-center pt-1">
+                  <span class="font-display font-bold text-2xl tracking-wider block">FEELAUTHIA</span>
+                  <span class="text-xs font-bold text-gold tracking-wide block">Find The Light Inside You</span>
+                  <span class="text-[10px] text-paper/75 uppercase tracking-widest mt-0.5 block">A Feelauthia Journal</span>
+                </div>
+                <svg viewBox="0 0 220 170" class="w-full my-auto">
+                  <line x1="80" y1="30" x2="175" y2="12" stroke="#FFFBF2" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="80" cy="30" r="4" fill="#F0A830"/>
+                  <circle cx="38" cy="22" r="2" fill="#FFFBF2" class="twinkle-star"/>
+                  <circle cx="192" cy="48" r="2" fill="#F0A830" class="twinkle-star"/>
+                  <path d="M0 132 Q110 102 220 132 L220 170 L0 170 Z" fill="#58896B"/>
+                  <circle cx="60" cy="116" r="14" fill="#FFFBF2" stroke="#2B2320" stroke-width="2"/>
+                  <ellipse cx="60" cy="142" rx="16" ry="18" fill="#8E2C3E" stroke="#2B2320" stroke-width="2"/>
+                  <circle cx="110" cy="112" r="13" fill="#6F7580" stroke="#2B2320" stroke-width="2"/>
+                  <rect x="96" y="125" width="28" height="32" rx="8" fill="#323B4B" stroke="#2B2320" stroke-width="2"/>
+                  <circle cx="160" cy="116" r="13" fill="#A65C32" stroke="#2B2320" stroke-width="2"/>
+                  <ellipse cx="160" cy="142" rx="16" ry="18" fill="#2D6CDF" stroke="#2B2320" stroke-width="2"/>
+                </svg>
+                <div class="text-center">
+                  <span class="inline-block px-3 py-1 rounded-full bg-paper/15 border border-paper/30 font-display text-[11px] tracking-wider">
+                    144-PAGE GUIDED JOURNAL
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Book Copy & Marketplace Buttons -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold">Flagship Book</span>
+              <span class="px-3 py-1 rounded-full bg-paperDeep border-2 border-ink font-display text-xs font-bold">144 Illustrated Pages</span>
+            </div>
+            <div>
+              <h2 class="font-display font-bold text-3xl text-ink">FEELAUTHIA Journaling Book</h2>
+              <p class="font-display text-sm font-semibold text-luna mt-0.5">Find The Light Inside You — A Feelauthia Journal</p>
+            </div>
+            <p class="text-ink/85 leading-relaxed">
+              A 144-page guided journal built around our <strong>4-Phase Identity Loop</strong>. Instead of pushing toxic positivity, Cleo, Luna, and Mills walk beside you with gentle, psychology-backed prompts—helping you calm your body, drop borrowed standards, uncover your values, and practice tiny real-world courage.
+            </p>
+            <div class="flex flex-wrap gap-3 pt-1">
+              <a data-market-link="bookShopeeUrl" href="#shopee-book" target="_blank" rel="noopener noreferrer"
+                class="comic-btn bg-shopee text-white font-display font-bold px-6 py-3 rounded-full text-sm inline-flex items-center gap-2">
+                <span>🛒</span> Buy on Shopee
+              </a>
+              <a data-market-link="bookTokopediaUrl" href="#tokopedia-book" target="_blank" rel="noopener noreferrer"
+                class="comic-btn bg-tokopedia text-white font-display font-bold px-6 py-3 rounded-full text-sm inline-flex items-center gap-2">
+                <span>🛍️</span> Buy on Tokopedia
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-PHASE IDENTITY LOOP INTERACTIVE TABS -->
+        <div class="pt-6 border-t-2 border-dashed border-ink/20 space-y-4">
+          <div>
+            <h3 class="font-display font-bold text-2xl text-ink">🧠 The 4-Phase Identity Loop &amp; Psychology</h3>
+            <p class="text-sm text-ink/75">Explore the accessible psychology foundations inside each phase of the book.</p>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5" role="tablist" aria-label="4-Phase Identity Loop">
+            <button type="button" data-phase-tab="1" class="phase-tab-btn comic-btn bg-cleo text-white font-display font-bold px-4 py-3 rounded-2xl text-sm text-left">
+              <span class="text-[11px] opacity-85 block uppercase">Phase 1</span>
+              1. Regulate
+            </button>
+            <button type="button" data-phase-tab="2" class="phase-tab-btn comic-btn bg-paperDeep text-ink font-display font-bold px-4 py-3 rounded-2xl text-sm text-left">
+              <span class="text-[11px] opacity-70 block uppercase">Phase 2</span>
+              2. Deconstruct
+            </button>
+            <button type="button" data-phase-tab="3" class="phase-tab-btn comic-btn bg-paperDeep text-ink font-display font-bold px-4 py-3 rounded-2xl text-sm text-left">
+              <span class="text-[11px] opacity-70 block uppercase">Phase 3</span>
+              3. Excavate
+            </button>
+            <button type="button" data-phase-tab="4" class="phase-tab-btn comic-btn bg-paperDeep text-ink font-display font-bold px-4 py-3 rounded-2xl text-sm text-left">
+              <span class="text-[11px] opacity-70 block uppercase">Phase 4</span>
+              4. Integrate
+            </button>
+          </div>
+
+          <div id="phase-detail-box" class="comic-card-sm bg-[#EFF5FF] p-5 sm:p-6 space-y-3">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- INTERACTIVE 5-PAGE "PEEK INSIDE THE BOOK" FLIPBOOK -->
+        <div class="pt-6 border-t-2 border-dashed border-ink/20 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="font-display font-bold text-2xl text-ink">📖 Peek Inside the Book</h3>
+              <p class="text-sm text-ink/75">Flip through 5 sample pages from the FEELAUTHIA Journaling Book.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="flip-prev-btn" type="button" class="comic-btn bg-paperDeep text-ink font-display font-bold px-4 py-2 rounded-full text-xs">
+                ← Prev Page
+              </button>
+              <span id="flip-counter" class="font-display font-bold text-xs px-3 py-1.5 rounded-full bg-gold/30 border-2 border-ink">
+                1 / 5
+              </span>
+              <button id="flip-next-btn" type="button" class="comic-btn bg-gold text-ink font-display font-bold px-4 py-2 rounded-full text-xs">
+                Next Page →
+              </button>
+            </div>
+          </div>
+
+          <div class="comic-card-sm bg-paper p-5 sm:p-7 min-h-[295px]">
+
+            <!-- Flip Page 1: Welcome Letter from Cleo, Luna & Mills -->
+            <div data-flip-page="0" class="space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="font-display font-bold text-lg text-ink">Sample 1 · Welcome Letter (p. 5)</span>
+                <span class="text-xs font-bold text-luna bg-[#FCEEF0] px-3 py-1 rounded-full border border-ink/20">From Cleo, Luna &amp; Mills</span>
+              </div>
+              <div class="bg-card rounded-2xl border-2 border-ink/20 p-5 space-y-3 text-sm sm:text-base text-ink/90 leading-relaxed">
+                <p class="font-display font-bold text-cleo">Dear you,</p>
+                <p>
+                  We are Cleo, Luna, and Mills. Cleo hides in his hoodie when his thoughts get loud. Luna listens until the world feels quieter. Mills shines so brightly that others sometimes feel small beside him.
+                </p>
+                <p class="font-semibold text-ink">
+                  You don't need to become someone else to be worthy of light. You only need to stop hiding from the one you already have.
+                </p>
+                <p>
+                  This book won't push you to be perfect, positive, or confident by Friday. Take your time—some pages will make your ears droop, and that is part of the process.
+                </p>
+                <p class="font-display font-bold text-luna pt-1">With warmth, Cleo, Luna &amp; Mills</p>
+              </div>
+            </div>
+
+            <!-- Flip Page 2: 4–6 Breath Reset -->
+            <div data-flip-page="1" class="hidden space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="font-display font-bold text-lg text-cleo">Sample 2 · 4–6 Breath Reset (p. 13)</span>
+                <span class="text-xs font-bold text-cleo bg-[#EFF5FF] px-3 py-1 rounded-full border border-ink/20">Phase 1 · Regulate</span>
+              </div>
+              <p class="text-sm text-ink/85 leading-relaxed">
+                Slow, longer exhales tell your nervous system the danger has passed. Try five gentle rounds before any heavy page:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-card rounded-xl border-2 border-ink/20 p-4 text-center">
+                  <span class="font-display font-bold text-2xl text-cleo block">Step 1</span>
+                  <p class="text-xs sm:text-sm mt-1">Sit comfortably and let your shoulders drop one inch.</p>
+                </div>
+                <div class="bg-card rounded-xl border-2 border-ink/20 p-4 text-center">
+                  <span class="font-display font-bold text-2xl text-gold block">In · 4s</span>
+                  <p class="text-xs sm:text-sm mt-1">Breathe in gently through your nose for a count of 4.</p>
+                </div>
+                <div class="bg-card rounded-xl border-2 border-ink/20 p-4 text-center">
+                  <span class="font-display font-bold text-2xl text-sage block">Out · 6s</span>
+                  <p class="text-xs sm:text-sm mt-1">Exhale slowly through your mouth for a count of 6.</p>
+                </div>
+              </div>
+              <div class="pt-1 flex justify-center">
+                <button type="button" data-open-modal="breathe-modal" class="comic-btn bg-cleo text-white font-display font-bold px-5 py-2.5 rounded-full text-sm">
+                  🫧 Try Guided 4–6 Breathing Now
+                </button>
+              </div>
+            </div>
+
+            <!-- Flip Page 3: Feelings Word Bank (Interactive Tappable Pills) -->
+            <div data-flip-page="2" class="hidden space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="font-display font-bold text-lg text-cleo">Sample 3 · Feelings Word Bank (p. 16)</span>
+                <span class="text-xs font-bold text-cleo bg-[#EFF5FF] px-3 py-1 rounded-full border border-ink/20">Name It to Tame It</span>
+              </div>
+              <p class="text-sm text-ink/80">Tap the exact words that fit how you feel today—naming an emotion accurately helps quiet its intensity:</p>
+              <div id="feelings-bank-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- Populated by JS with interactive feeling pills -->
+              </div>
+              <p class="text-xs font-bold text-cleo">Words tapped today: <span id="feelings-selected-readout">None yet — tap any word above</span></p>
+            </div>
+
+            <!-- Flip Page 4: Borrowed vs. Owned Audit -->
+            <div data-flip-page="3" class="hidden space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="font-display font-bold text-lg text-luna">Sample 4 · Borrowed vs. Owned Audit (p. 44)</span>
+                <span class="text-xs font-bold text-luna bg-[#FCEEF0] px-3 py-1 rounded-full border border-ink/20">Phase 2 · Deconstruct</span>
+              </div>
+              <p class="text-sm text-ink/80"><em>"Owned feels like warmth and curiosity. Borrowed feels like pressure and should."</em> — Luna</p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm border-collapse bg-card rounded-xl overflow-hidden border-2 border-ink/25">
+                  <thead>
+                    <tr class="bg-[#FCEEF0] border-b-2 border-ink font-display">
+                      <th class="p-3">Insecurity or Goal</th>
+                      <th class="p-3">Where I Learned It</th>
+                      <th class="p-3">B / O</th>
+                      <th class="p-3">Keep or Drop?</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-ink/15">
+                    <tr>
+                      <td class="p-3 font-semibold">Always being the loudest/coolest</td>
+                      <td class="p-3">Comparing feeds online</td>
+                      <td class="p-3"><span class="px-2 py-0.5 rounded bg-luna/15 text-luna font-bold">Borrowed</span></td>
+                      <td class="p-3">Drop — exhausting!</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 font-semibold">Drawing quiet stories late at night</td>
+                      <td class="p-3">Loved it since childhood</td>
+                      <td class="p-3"><span class="px-2 py-0.5 rounded bg-sage/20 text-sage font-bold">Owned</span></td>
+                      <td class="p-3">Keep &amp; nurture</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 font-semibold">Having life completely figured out at 22</td>
+                      <td class="p-3">Family dinners &amp; pressure</td>
+                      <td class="p-3"><span class="px-2 py-0.5 rounded bg-luna/15 text-luna font-bold">Borrowed</span></td>
+                      <td class="p-3">Loosen gently</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Flip Page 5: Courage Ladder -->
+            <div data-flip-page="4" class="hidden space-y-3.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="font-display font-bold text-lg text-[#9D6B12]">Sample 5 · Courage Ladder (p. 119)</span>
+                <span class="text-xs font-bold text-ink bg-gold/30 px-3 py-1 rounded-full border border-ink/20">Phase 4 · Integrate</span>
+              </div>
+              <p class="text-sm text-ink/80"><em>"Start small. The first time I was honest about feeling nervous, nothing exploded."</em> — Mills</p>
+              <div class="space-y-2 text-sm">
+                <div class="flex items-center gap-3 bg-gold/30 border-2 border-ink rounded-xl px-4 py-2 font-semibold">
+                  <span class="font-display text-xs font-bold bg-gold border border-ink px-2.5 py-0.5 rounded-full">Step 7</span>
+                  <span>Lower the hoodie: share what I honestly feel with someone safe</span>
+                </div>
+                <div class="flex items-center gap-3 bg-card border-2 border-ink/25 rounded-xl px-4 py-2">
+                  <span class="font-display text-xs font-bold bg-paperDeep border border-ink px-2.5 py-0.5 rounded-full">Step 5</span>
+                  <span>Say a clear "no" without writing a long apology</span>
+                </div>
+                <div class="flex items-center gap-3 bg-card border-2 border-ink/25 rounded-xl px-4 py-2">
+                  <span class="font-display text-xs font-bold bg-paperDeep border border-ink px-2.5 py-0.5 rounded-full">Step 3</span>
+                  <span>Wear what I genuinely like instead of hiding</span>
+                </div>
+                <div class="flex items-center gap-3 bg-card border-2 border-ink/25 rounded-xl px-4 py-2">
+                  <span class="font-display text-xs font-bold bg-paperDeep border border-ink px-2.5 py-0.5 rounded-full">Step 1</span>
+                  <span>Order my favorite café drink instead of copying everyone else</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           PRODUCT 2: FEELAUTHIA SENSORY KEYBOARD KEYCHAIN
+           ===================================================================== -->
+      <div class="comic-card bg-[#EFF5FF] p-6 sm:p-9">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full bg-cleo text-white border-2 border-ink font-display text-xs font-bold">Sensory Grounding Tool</span>
+              <span class="px-3 py-1 rounded-full bg-card border-2 border-ink font-display text-xs font-bold">Crisp Mechanical Switch</span>
+            </div>
+            <h2 class="font-display font-bold text-3xl text-ink">FEELAUTHIA Sensory Keyboard Keychain</h2>
+            <p class="text-ink/85 leading-relaxed">
+              When anxiety spikes, overthinking traps you inside your thoughts. Tactile sensory grounding interrupts that alarm in real time by giving your fingers a rhythmic, physical anchor—discreet enough for lectures, commutes, or busy cafés.
+            </p>
+            <ul class="space-y-1.5 text-sm text-ink/85 font-semibold">
+              <li>✅ Satisfying, crisp mechanical keyboard switch click feel</li>
+              <li>✅ Collectible Cleo, Luna, and Mills cartoon keycap toppers</li>
+              <li>✅ Sturdy pocket-friendly clasp for keys, bags, or pencil cases</li>
+            </ul>
+            <div class="flex flex-wrap gap-3 pt-2">
+              <a data-market-link="keychainShopeeUrl" href="#shopee-keychain" target="_blank" rel="noopener noreferrer"
+                class="comic-btn bg-shopee text-white font-display font-bold px-6 py-3 rounded-full text-sm inline-flex items-center gap-2">
+                <span>🛒</span> Buy on Shopee
+              </a>
+              <a data-market-link="keychainTokopediaUrl" href="#tokopedia-keychain" target="_blank" rel="noopener noreferrer"
+                class="comic-btn bg-tokopedia text-white font-display font-bold px-6 py-3 rounded-full text-sm inline-flex items-center gap-2">
+                <span>🛍️</span> Buy on Tokopedia
+              </a>
+            </div>
+          </div>
+
+          <!-- Interactive Mechanical Keycap Toy (Web Audio API Mechanical Switch Click) -->
+          <div class="lg:col-span-5">
+            <div class="comic-card-sm bg-card p-6 text-center space-y-4 relative overflow-hidden">
+              <div class="flex items-center justify-between">
+                <span class="font-display text-xs font-bold uppercase tracking-wider text-cleo bg-[#EFF5FF] px-3 py-1 rounded-full border border-ink/20">
+                  Try Clicking It!
+                </span>
+                <button id="keycap-sound-toggle" type="button" class="text-xs font-display font-bold px-3 py-1 rounded-full bg-paperDeep border-2 border-ink">
+                  🔊 Click SFX On
+                </button>
+              </div>
+
+              <div class="flex flex-col items-center justify-center py-2 relative" id="keycap-sparkle-zone">
+                <div class="w-9 h-9 rounded-full border-4 border-ink/70 -mb-1.5"></div>
+                <div class="w-3 h-3.5 bg-ink/70 rounded-sm"></div>
+                <div class="p-3.5 rounded-3xl bg-paperDeep border-[3px] border-ink shadow-[4px_4px_0_#2B2320]">
+                  <button id="keycap-demo-btn" type="button" aria-label="Click the FEELAUTHIA Mechanical Keyboard Keychain"
+                    class="keychain-cap w-28 h-28 rounded-2xl bg-cleo text-white flex flex-col items-center justify-center gap-1 focus:outline-none">
+                    <svg viewBox="0 0 64 64" class="w-14 h-14 pointer-events-none" aria-hidden="true">
+                      <ellipse cx="14" cy="34" rx="7" ry="14" fill="#6E3618" stroke="#2B2320" stroke-width="2.5"/>
+                      <ellipse cx="50" cy="34" rx="7" ry="14" fill="#6E3618" stroke="#2B2320" stroke-width="2.5"/>
+                      <circle cx="32" cy="30" r="17" fill="#A65C32" stroke="#2B2320" stroke-width="2.5"/>
+                      <ellipse cx="32" cy="36" rx="11" ry="8" fill="#FFFBF2"/>
+                      <circle cx="25" cy="29" r="2.6" fill="#2B2320"/>
+                      <circle cx="39" cy="29" r="2.6" fill="#2B2320"/>
+                      <ellipse cx="32" cy="34" rx="3.2" ry="2.2" fill="#2B2320"/>
+                      <path d="M28 40 Q32 43 36 40" fill="none" stroke="#2B2320" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="font-display text-[11px] font-bold tracking-wider uppercase">CLICK / SPACE</span>
+                  </button>
+                </div>
+              </div>
+
+              <p id="keycap-prompt-text" class="font-display text-base text-ink min-h-[2.8rem] flex items-center justify-center">
+                "Press the keycap (or Spacebar) for a tiny calming reminder."
+              </p>
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-paperDeep border-2 border-ink font-display text-xs font-bold">
+                <span>✨ Grounding Clicks:</span>
+                <span id="keycap-click-count" class="text-cleo text-sm">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3 Pagination Bar -->
+      <div class="comic-card-sm bg-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#story" data-route="story" class="comic-btn bg-paper text-ink font-display font-bold px-5 py-3 rounded-full text-sm w-full sm:w-auto text-center">
+          ← Previous Page: Visual Novel
+        </a>
+        <span class="font-display text-xs font-bold uppercase tracking-wider text-ink/70 px-3 py-1 rounded-full bg-paperDeep border border-ink/25">
+          Page 3 of 6 · Our Products
+        </span>
+        <a href="#game" data-route="game" class="comic-btn bg-amberWarm text-white font-display font-bold px-6 py-3 rounded-full text-sm sm:text-base w-full sm:w-auto text-center">
+          Next Page: Mini-Game →
+        </a>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PAGE 4 OF 6: MINI-GAME (#game) — "Escape the Overthinking Circle"
+         ======================================================================= -->
+    <section id="page-game" class="page-view mx-auto max-w-4xl space-y-6" data-page="game">
+
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-amberWarm text-white border-2 border-ink font-display text-xs font-bold uppercase tracking-wider">
+          Page 4 · Cozy Cartoon Mini-Game
+        </span>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-ink">Escape the Overthinking Circle</h1>
+        <p class="text-ink/80 text-sm sm:text-base">
+          Steer Cleo out through the rotating <strong>Golden Door</strong>! Use <strong>Arrow Keys / WASD</strong>, drag on the canvas, or hold the touch D-pad below. Every level cleared spins faster!
+        </p>
+      </div>
+
+      <!-- Game HUD & Action Buttons (Outside Canvas) -->
+      <div class="comic-card-sm bg-card p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full bg-cleo text-white border-2 border-ink font-display text-xs sm:text-sm font-bold">
+            Level <span id="g-level">1</span>
+          </span>
+          <span class="px-3 py-1 rounded-full bg-[#FFF6E1] border-2 border-ink font-display text-xs sm:text-sm font-bold">
+            ⭐ Poin: <span id="g-score" class="text-amberWarm font-bold">0</span>
+          </span>
+          <span class="px-3 py-1 rounded-full bg-[#FCEEF0] border-2 border-ink font-display text-xs sm:text-sm font-bold" title="3 Nyawa Cleo">
+            Nyawa: <span id="g-health" class="tracking-wider">❤️❤️❤️</span>
+          </span>
+          <span class="px-3 py-1 rounded-full bg-paperDeep border-2 border-ink font-display text-xs sm:text-sm font-bold">
+            Speed <span id="g-speed" class="text-amberWarm">1.0x</span>
+          </span>
+          <span class="px-3 py-1 rounded-full bg-[#FFF6E1] border-2 border-ink font-display text-xs sm:text-sm font-bold">
+            🏆 Best: <span id="g-best" class="text-[#9D6B12]">1</span>
+          </span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="g-pause-btn" type="button" class="comic-btn bg-paperDeep text-ink px-3.5 py-1.5 rounded-full font-display text-xs font-bold">
+            ⏸ Pause
+          </button>
+          <button id="g-restart-btn" type="button" class="comic-btn bg-paperDeep text-ink px-3.5 py-1.5 rounded-full font-display text-xs font-bold">
+            ↺ Restart
+          </button>
+          <button id="g-sound-btn" type="button" class="comic-btn bg-paperDeep text-ink px-3.5 py-1.5 rounded-full font-display text-xs font-bold">
+            🔊 Sound On
+          </button>
+        </div>
+      </div>
+
+      <!-- Warm Character Encouragement Banner -->
+      <div class="comic-card-sm bg-[#FFF6E1] px-4 py-2.5 text-center">
+        <p id="g-message" class="font-display font-medium text-sm sm:text-base text-ink">
+          Cleo: "Watch the glowing Golden Door and guide me safely through!"
+        </p>
+      </div>
+
+      <!-- Responsive 2D Canvas Stage -->
+      <div class="relative mx-auto w-full max-w-[520px] aspect-square comic-card bg-night overflow-hidden select-none">
+        <canvas id="escape-canvas" aria-label="Escape the Overthinking Circle Mini-Game"></canvas>
+
+        <!-- Floating Level-Up Pop-Up Banner -->
+        <div id="g-levelup-popup" class="hidden pointer-events-none absolute inset-x-8 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center text-center">
+          <div class="comic-card bg-gold text-ink p-5 sm:p-6 border-[3.5px] border-ink shadow-[6px_6px_0_#2B2320] space-y-1.5 animate-bounce">
+            <span class="text-3xl">🎉🚪✨</span>
+            <h3 id="g-levelup-title" class="font-display font-bold text-3xl text-ink">LEVEL 2</h3>
+            <p id="g-levelup-sub" class="font-display font-bold text-base text-ink/90 bg-paper/85 py-1 px-4 rounded-full border border-ink">+50 Poin!</p>
+          </div>
+        </div>
+
+        <!-- Start / Pause / Game Over Overlay -->
+        <div id="g-overlay" class="absolute inset-0 bg-night/88 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center text-paper space-y-4 z-10">
+          <span id="g-ov-badge" class="px-3.5 py-1 rounded-full bg-gold text-ink border-2 border-ink font-display text-xs font-bold">
+            ✨ Ready to Play
+          </span>
+          <h2 id="g-ov-title" class="font-display font-bold text-3xl text-paper">Guide Cleo to the Light</h2>
+          <div id="g-ov-desc" class="text-paper/85 text-sm max-w-xs leading-relaxed space-y-2">
+            <p>Slip out through the glowing Golden Door in the spinning circle of tangled thoughts. Touching the dark line costs 1 health—you have 3 hearts!</p>
+          </div>
+          <button id="g-start-btn" type="button" class="comic-btn bg-gold text-ink font-display font-bold px-8 py-3.5 rounded-full text-lg">
+            ▶ Start Escaping
+          </button>
+        </div>
+      </div>
+
+      <!-- On-Screen Mobile Touch D-Pad (Outside Canvas) -->
+      <div class="flex flex-col items-center gap-2 pt-1">
+        <p class="text-xs font-bold text-ink/65 uppercase tracking-wider font-display text-center">
+          Arrow Keys / WASD · Drag on Canvas · or Hold Touch Pad Below
+        </p>
+        <div class="grid grid-cols-3 gap-2 w-48">
+          <div></div>
+          <button type="button" data-dir="up" aria-label="Move Up" class="dpad-btn comic-btn bg-card text-ink h-12 rounded-2xl font-display font-bold text-lg flex items-center justify-center select-none">▲</button>
+          <div></div>
+          <button type="button" data-dir="left" aria-label="Move Left" class="dpad-btn comic-btn bg-card text-ink h-12 rounded-2xl font-display font-bold text-lg flex items-center justify-center select-none">◀</button>
+          <button type="button" data-dir="down" aria-label="Move Down" class="dpad-btn comic-btn bg-card text-ink h-12 rounded-2xl font-display font-bold text-lg flex items-center justify-center select-none">▼</button>
+          <button type="button" data-dir="right" aria-label="Move Right" class="dpad-btn comic-btn bg-card text-ink h-12 rounded-2xl font-display font-bold text-lg flex items-center justify-center select-none">▶</button>
+        </div>
+      </div>
+
+      <!-- Page 4 Pagination Bar -->
+      <div class="comic-card-sm bg-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#products" data-route="products" class="comic-btn bg-paper text-ink font-display font-bold px-5 py-3 rounded-full text-sm w-full sm:w-auto text-center">
+          ← Previous Page: Our Products
+        </a>
+        <span class="font-display text-xs font-bold uppercase tracking-wider text-ink/70 px-3 py-1 rounded-full bg-paperDeep border border-ink/25">
+          Page 4 of 6 · Mini-Game
+        </span>
+        <a href="#behind" data-route="behind" class="comic-btn bg-sage text-white font-display font-bold px-6 py-3 rounded-full text-sm sm:text-base w-full sm:w-auto text-center">
+          Next Page: Behind Feelauthia →
+        </a>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PAGE 5 OF 6: BEHIND FEELAUTHIA (#behind) — 3 Creators & Ethics
+         ======================================================================= -->
+    <section id="page-behind" class="page-view mx-auto max-w-6xl space-y-10" data-page="behind">
+
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-sage text-white border-2 border-ink font-display text-xs font-bold uppercase tracking-wider">
+          Page 5 · The Humans Behind the Story
+        </span>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-ink">Behind FEELAUTHIA</h1>
+        <p class="text-ink/80 text-sm sm:text-base">
+          Created by three storytellers—two men and one woman—building a comforting bridge between cartoon visual stories and everyday emotional grounding.
+        </p>
+      </div>
+
+      <!-- 3 Creator Profile Cards (Populated from SITE_CONFIG.team with Cartoon Portrait Fallbacks) -->
+      <div id="team-cards-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Populated dynamically via JS -->
+      </div>
+
+      <!-- Dedicated Visible Cards: AI Use Statement & Gentle Wellness Note -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article class="comic-card p-6 sm:p-7 space-y-3 bg-[#EFF5FF]">
+          <div class="flex items-center gap-3">
+            <span class="w-11 h-11 rounded-2xl bg-gold border-2 border-ink shadow-[2px_2px_0_#2B2320] flex items-center justify-center text-xl">🤖</span>
+            <div>
+              <span class="font-display text-[11px] font-bold uppercase tracking-wider text-cleo block">Transparency</span>
+              <h2 class="font-display font-bold text-xl text-ink">Human-in-the-Loop AI Use Statement</h2>
+            </div>
+          </div>
+          <p class="text-sm text-ink/85 leading-relaxed">
+            FEELAUTHIA embraces a transparent <strong>Human-in-the-Loop AI</strong> model. We use AI as a collaborative helper during visual exploration and text drafting—including <strong>Higgsfield / GPT Image 2.5 Sunburst</strong>, <strong>Midjourney</strong>, and <strong>Flow Gemini / Nano Banana Pro 2.1</strong>—so our small team can build and iterate faster.
+          </p>
+          <p class="text-sm text-ink/85 leading-relaxed">
+            Every core concept, four-phase reflection framework, creative direction, and the <strong>heart, soul, and vulnerability of Cleo, Luna, and Mills are completely human-made</strong>.
+          </p>
+        </article>
+
+        <article class="comic-card p-6 sm:p-7 space-y-3 bg-[#FCEEF0]">
+          <div class="flex items-center gap-3">
+            <span class="w-11 h-11 rounded-2xl bg-luna text-white border-2 border-ink shadow-[2px_2px_0_#2B2320] flex items-center justify-center text-xl">💛</span>
+            <div>
+              <span class="font-display text-[11px] font-bold uppercase tracking-wider text-luna block">Care &amp; Safety</span>
+              <h2 class="font-display font-bold text-xl text-ink">Gentle Wellness Note</h2>
+            </div>
+          </div>
+          <p class="text-sm text-ink/85 leading-relaxed">
+            <strong>FEELAUTHIA is a creative story world and self-reflection journal—not medical advice or therapy.</strong> While inspired by established psychology research, it cannot diagnose conditions or replace a licensed counselor or psychologist.
+          </p>
+          <p class="text-sm text-ink/85 leading-relaxed">
+            Go at your own pace. If anything ever feels overwhelming, or if you feel unsafe, please pause and reach out right away to someone you trust, a licensed mental health professional, or your local crisis helpline. You deserve real support.
+          </p>
+        </article>
+      </div>
+
+      <!-- Page 5 Pagination Bar -->
+      <div class="comic-card-sm bg-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#game" data-route="game" class="comic-btn bg-paper text-ink font-display font-bold px-5 py-3 rounded-full text-sm w-full sm:w-auto text-center">
+          ← Previous Page: Mini-Game
+        </a>
+        <span class="font-display text-xs font-bold uppercase tracking-wider text-ink/70 px-3 py-1 rounded-full bg-paperDeep border border-ink/25">
+          Page 5 of 6 · Behind Feelauthia
+        </span>
+        <a href="#feedback" data-route="feedback" class="comic-btn bg-gold text-ink font-display font-bold px-6 py-3 rounded-full text-sm sm:text-base w-full sm:w-auto text-center">
+          Next Page: Feedback →
+        </a>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PAGE 6 OF 6: FEEDBACK (#feedback) — Google Forms Embed + Preview Mode
+         ======================================================================= -->
+    <section id="page-feedback" class="page-view mx-auto max-w-4xl space-y-8" data-page="feedback">
+
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-gold text-ink border-2 border-ink font-display text-xs font-bold uppercase tracking-wider">
+          Page 6 · Shape Future Chapters
+        </span>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-ink">Leave a Note at the Café</h1>
+        <p class="text-ink/80 text-sm sm:text-base">
+          Fill in the blanks below to help make FEELAUTHIA's stories, journal, and future sensory tools even kinder and more helpful.
+        </p>
+      </div>
+
+      <!-- Live Responsive Google Form Container (Auto-activates when SITE_CONFIG.googleFormEmbedUrl is filled) -->
+      <div id="gf-live-card" class="hidden comic-card p-5 sm:p-7 space-y-4">
+        <div class="rounded-2xl overflow-hidden border-2 border-ink bg-paper">
+          <iframe id="gf-iframe" title="FEELAUTHIA Google Form Feedback" class="w-full h-[680px]" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+        <div class="text-center">
+          <a id="gf-direct-link" href="#" target="_blank" rel="noopener noreferrer"
+            class="comic-btn bg-cleo text-white font-display font-bold px-6 py-3 rounded-full text-sm inline-flex items-center gap-2">
+            <span>📝</span> Open Google Form in New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- Interactive Preview Mode (Shown while SITE_CONFIG.googleFormEmbedUrl is empty) -->
+      <div id="gf-preview-card" class="space-y-5">
+        <!-- Subtle Collapsible Owner Setup Note -->
+        <details class="comic-card-sm bg-[#EBF7EF] p-4 text-xs sm:text-sm text-ink/90 border-2 border-sage/40">
+          <summary class="font-display font-bold text-sage cursor-pointer select-none flex items-center gap-2">
+            <span>✅</span> Status Form: Terhubung Langsung ke Google Form Anda
+          </summary>
+          <div class="mt-2.5 space-y-1.5 text-ink/85 leading-relaxed">
+            <p><strong>Terkoneksi ke Google Form:</strong> Formulir ini sudah dipetakan ke 7 pertanyaan di Google Form akun Anda.</p>
+            <p><strong>Rekap Jawaban:</strong> Setiap pengunjung yang klik <em>Send Café Note</em>, jawabannya langsung tersimpan di tab Responses Google Form &amp; Google Sheet Anda.</p>
+            <p><strong>Notifikasi Email:</strong> Pastikan di Google Form Anda (tab <em>Responses</em> &gt; titik tiga <code>⋮</code>) sudah dicentang <strong>"Get email notifications for new responses"</strong> agar Google otomatis mengirim email ke <code>b.a.qowy@gmail.com</code>.</p>
+          </div>
+        </details>
+
+        <!-- Hidden iframe target for 100% reliable CORS-free Google Form submission -->
+        <iframe name="gform_hidden_iframe" id="gform_hidden_iframe" style="display:none;" src="about:blank"></iframe>
+
+        <!-- Interactive 7-Question Live Form -->
+        <form id="demo-feedback-form" class="comic-card p-6 sm:p-8 space-y-5">
+          <div class="border-b-2 border-dashed border-ink/20 pb-4 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2 class="font-display font-bold text-2xl text-ink">💌 FEELAUTHIA Reader Feedback</h2>
+              <p class="text-xs sm:text-sm text-ink/75 mt-0.5">Leave a note at the café — your thoughts reach the creators directly.</p>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-paperDeep border-2 border-ink font-display text-xs font-bold">Café Mailbox</span>
+          </div>
+
+          <div class="space-y-4 text-sm">
+            <div>
+              <label class="font-display font-bold text-cleo block mb-1.5" for="q1">
+                1. Which FEELAUTHIA character felt closest to you today?
+              </label>
+              <select id="q1" name="character" class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 font-semibold focus:outline-none focus:ring-2 focus:ring-gold">
+                <option value="Cleo (overthinking &amp; hiding in the hoodie)">Cleo (overthinking &amp; hiding in the hoodie)</option>
+                <option value="Luna">Luna (warm listener &amp; quiet calm)</option>
+                <option value="Mills">Mills (bright energy with hidden loneliness)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="font-display font-bold text-luna block mb-1.5" for="q2">
+                2. Reading the FEELAUTHIA Visual Novel made me feel ___________.
+              </label>
+              <input id="q2" name="feeling" type="text" required placeholder="e.g., understood, calmer, a little less alone..."
+                class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gold" />
+            </div>
+
+            <div>
+              <span class="font-display font-bold text-amberWarm block mb-1.5">3. Which part of the website did you enjoy most?</span>
+              <div class="flex flex-wrap gap-2">
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border-2 border-ink/30 cursor-pointer hover:border-ink/60 transition-colors">
+                  <input type="checkbox" name="q3_enjoyed" value="Visual Novel Story" checked class="accent-cleo" /> Visual Novel Story
+                </label>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border-2 border-ink/30 cursor-pointer hover:border-ink/60 transition-colors">
+                  <input type="checkbox" name="q3_enjoyed" value="Daily Café Quotes" class="accent-cleo" /> Daily Café Quotes
+                </label>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border-2 border-ink/30 cursor-pointer hover:border-ink/60 transition-colors">
+                  <input type="checkbox" name="q3_enjoyed" value="Peek Inside the Journal" class="accent-cleo" /> Peek Inside the Journal
+                </label>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border-2 border-ink/30 cursor-pointer hover:border-ink/60 transition-colors">
+                  <input type="checkbox" name="q3_enjoyed" value="Keyboard Keychain Clicker" class="accent-cleo" /> Keyboard Keychain Clicker
+                </label>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border-2 border-ink/30 cursor-pointer hover:border-ink/60 transition-colors">
+                  <input type="checkbox" name="q3_enjoyed" value="Escape Circle Mini-Game" class="accent-cleo" /> Escape Circle Mini-Game
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="font-display font-bold text-sage block mb-1.5" for="q4">
+                4. Which product are you most interested in owning?
+              </label>
+              <select id="q4" name="product" class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 font-semibold focus:outline-none focus:ring-2 focus:ring-gold">
+                <option value="FEELAUTHIA Journaling Book">FEELAUTHIA Journaling Book</option>
+                <option value="Keyboard Keychain Clicker">Sensory Keyboard Keychain</option>
+                <option value="Both Together!">Both together!</option>
+                <option value="Other sensory grounding merch">Other sensory grounding merch</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="font-display font-bold text-mills block mb-1.5" for="q5">
+                5. If FEELAUTHIA creates a new sensory grounding item next, I'd love ___________.
+              </label>
+              <input id="q5" name="sensory_item" type="text" required placeholder="e.g., lavender-scented stickers, worry stone, plush keychain..."
+                class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gold" />
+            </div>
+
+            <div>
+              <label class="font-display font-bold text-cleo block mb-1.5" for="q6">
+                6. One feeling or topic I hope FEELAUTHIA explores in future chapters is ___________.
+              </label>
+              <textarea id="q6" name="future_chapter_topic" required rows="2" placeholder="Share any honest story moment or feeling..."
+                class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
+            </div>
+
+            <div>
+              <label class="font-display font-bold text-luna block mb-1.5" for="q7">
+                7. Anything else you'd like to tell Cleo, Luna, Mills, or the creators? (Optional)
+              </label>
+              <textarea id="q7" name="creator_note" rows="2" placeholder="Leave a warm note at the corner café..."
+                class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-3">
+            <span class="text-xs text-ink/65">✨ Connected to Google Form &amp; <strong class="text-ink">b.a.qowy@gmail.com</strong></span>
+            <button id="feedback-submit-btn" type="submit" class="comic-btn bg-gold text-ink font-display font-bold px-7 py-3 rounded-full text-base flex items-center justify-center gap-2">
+              <span id="feedback-btn-icon">✉️</span>
+              <span id="feedback-btn-text">Send Café Note</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Friendly Submission Confirmation State -->
+        <div id="demo-feedback-thanks" class="hidden comic-card bg-[#EBF7EF] p-8 text-center space-y-3">
+          <div class="text-4xl">☕✨</div>
+          <h3 class="font-display font-bold text-2xl text-sage">Thank You for Leaving a Note!</h3>
+          <p class="text-sm text-ink/85 max-w-md mx-auto">
+            Luna pinned your note onto the FEELAUTHIA café board! Your message has been safely recorded in your Google Form &amp; Google Sheet.
+          </p>
+          <button id="demo-feedback-reset" type="button" class="comic-btn bg-card text-ink font-display font-bold px-5 py-2.5 rounded-full text-sm">
+            Write Another Note
+          </button>
+        </div>
+      </div>
+
+      <!-- Page 6 Pagination Bar -->
+      <div class="comic-card-sm bg-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <a href="#behind" data-route="behind" class="comic-btn bg-paper text-ink font-display font-bold px-5 py-3 rounded-full text-sm w-full sm:w-auto text-center">
+          ← Previous Page: Behind Feelauthia
+        </a>
+        <span class="font-display text-xs font-bold uppercase tracking-wider text-ink/70 px-3 py-1 rounded-full bg-paperDeep border border-ink/25">
+          Page 6 of 6 · Feedback
+        </span>
+        <a href="#home" data-route="home" class="comic-btn bg-cleo text-white font-display font-bold px-6 py-3 rounded-full text-sm sm:text-base w-full sm:w-auto text-center">
+          Next Page: Back to Home ↻
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       COMPACT GLOBAL FOOTER
+       ========================================================================= -->
+  <footer class="relative z-10 bg-night text-paper border-t-[3px] border-ink px-4 py-6 sm:px-6 mt-auto">
+    <div class="mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div>
+        <span class="font-display font-bold text-lg text-gold">FEELAUTHIA</span>
+        <span class="text-xs text-paper/75 ml-2">Find The Light Inside You · © <span id="yr-now">2026</span></span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-2.5">
+        <a id="footer-ig-link" href="#instagram" target="_blank" rel="noopener noreferrer"
+          class="px-3.5 py-1.5 rounded-full bg-paper/10 hover:bg-paper/20 border border-paper/30 font-display text-xs font-semibold transition-colors inline-flex items-center gap-1.5">
+          <span>📸</span> Instagram
+        </a>
+        <button type="button" data-open-modal="wellness-modal" class="px-3.5 py-1.5 rounded-full bg-paper/10 hover:bg-paper/20 border border-paper/30 font-display text-xs font-semibold transition-colors">
+          💛 Gentle Note
+        </button>
+        <button type="button" data-open-modal="ai-modal" class="px-3.5 py-1.5 rounded-full bg-gold/20 hover:bg-gold/30 border border-gold/50 text-gold font-display text-xs font-semibold transition-colors">
+          🤖 AI Use Statement
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       FLOATING "4–6 BREATHE" CALM-RESET PILL ("The Hoodie Rule")
+       ========================================================================= -->
+  <button id="floating-breathe-btn" type="button" data-open-modal="breathe-modal" aria-label="Open 4-6 Calm Breathing Reset"
+    class="fixed bottom-5 right-5 z-40 comic-btn bg-cleo text-white font-display font-bold px-4 py-3 rounded-full text-xs sm:text-sm flex items-center gap-2">
+    <span class="text-base">🫧</span>
+    <span>4–6 Breathe</span>
+  </button>
+
+  <!-- =========================================================================
+       MODAL 1: GUIDED 4–6 BREATHING CIRCLE ("THE HOODIE RULE")
+       ========================================================================= -->
+  <div id="breathe-modal" role="dialog" aria-modal="true" aria-labelledby="breathe-title"
+    class="hidden fixed inset-0 z-50 bg-night/75 backdrop-blur-xs p-4 flex items-center justify-center">
+    <div class="comic-card bg-card max-w-md w-full p-6 sm:p-7 text-center space-y-5 relative">
+      <button type="button" data-close-modal aria-label="Close Breathing Modal"
+        class="absolute top-4 right-4 w-9 h-9 rounded-full border-2 border-ink bg-paper font-display font-bold hover:bg-gold/30">✕</button>
+      <div>
+        <span class="inline-block px-3 py-0.5 rounded-full bg-[#EFF5FF] text-cleo border-2 border-ink font-display text-xs font-bold mb-1">
+          The Hoodie Rule · Body Reset
+        </span>
+        <h3 id="breathe-title" class="font-display font-bold text-2xl text-ink">4–6 Calm Breathing</h3>
+        <p class="text-xs text-ink/75 mt-1">Inhale gently for 4 seconds, exhale softly for 6 seconds.</p>
+      </div>
+
+      <div class="h-48 flex items-center justify-center">
+        <div class="w-44 h-44 rounded-full border-2 border-dashed border-ink/30 flex items-center justify-center">
+          <div id="modal-breathe-orb" class="breathe-orb w-24 h-24 rounded-full bg-cleo/25 border-[2.5px] border-ink shadow-[3px_3px_0_#2B2320] flex flex-col items-center justify-center">
+            <span id="modal-breathe-phase" class="font-display font-bold text-sm text-ink">Ready</span>
+            <span id="modal-breathe-num" class="font-display font-bold text-2xl text-cleo">4–6</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-xs font-semibold text-ink/75">"Drop your shoulders one inch. You are safe in this room." — Luna</p>
+
+      <div class="flex justify-center gap-3">
+        <button id="modal-breathe-toggle" type="button" class="comic-btn bg-cleo text-white font-display font-bold px-6 py-2.5 rounded-full text-sm">
+          ▶ Start Breathing
+        </button>
+        <button type="button" data-close-modal class="comic-btn bg-paperDeep text-ink font-display font-bold px-5 py-2.5 rounded-full text-sm">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2: GENTLE WELLNESS NOTE
+       ========================================================================= -->
+  <div id="wellness-modal" role="dialog" aria-modal="true" aria-labelledby="wellness-title"
+    class="hidden fixed inset-0 z-50 bg-night/75 backdrop-blur-xs p-4 flex items-center justify-center">
+    <div class="comic-card bg-card max-w-lg w-full p-6 sm:p-8 space-y-4 max-h-[85vh] overflow-y-auto relative">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span class="inline-block px-3 py-0.5 rounded-full bg-[#FFF6E1] border-2 border-ink font-display text-xs font-bold mb-1">A Gentle Note</span>
+          <h3 id="wellness-title" class="font-display font-bold text-2xl text-ink">Before You Begin</h3>
+        </div>
+        <button type="button" data-close-modal class="w-9 h-9 rounded-full border-2 border-ink bg-paper font-display font-bold">✕</button>
+      </div>
+      <div class="space-y-3 text-sm text-ink/85 leading-relaxed">
+        <p><strong>FEELAUTHIA is a story world and self-reflection journal, not medical advice or therapy.</strong> While inspired by established psychology ideas (Polyvagal Theory, ACT, Self-Compassion, Social Comparison Theory, and CBT), it cannot diagnose any condition or replace a licensed professional.</p>
+        <p><strong>Go at your own pace.</strong> If a story moment or journal prompt stirs up something heavy, close the page, tap the 4–6 Breathe button, and return another day.</p>
+        <p class="p-3.5 rounded-xl bg-[#FCEEF0] border-2 border-luna/30">
+          <strong>Need real support right now?</strong> If you ever feel unsafe or think about hurting yourself, please reach out immediately to someone you trust, a licensed mental health professional, or your local emergency or crisis helpline.
+        </p>
+      </div>
+      <div class="text-right">
+        <button type="button" data-close-modal class="comic-btn bg-cleo text-white font-display font-bold px-6 py-2.5 rounded-full text-sm">
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 3: AI USE STATEMENT
+       ========================================================================= -->
+  <div id="ai-modal" role="dialog" aria-modal="true" aria-labelledby="ai-title"
+    class="hidden fixed inset-0 z-50 bg-night/75 backdrop-blur-xs p-4 flex items-center justify-center">
+    <div class="comic-card bg-card max-w-lg w-full p-6 sm:p-8 space-y-4 max-h-[85vh] overflow-y-auto relative">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span class="inline-block px-3 py-0.5 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold mb-1">Transparency</span>
+          <h3 id="ai-title" class="font-display font-bold text-2xl text-ink">Human-in-the-Loop AI Use Statement</h3>
+        </div>
+        <button type="button" data-close-modal class="w-9 h-9 rounded-full border-2 border-ink bg-paper font-display font-bold">✕</button>
+      </div>
+      <div class="space-y-3 text-sm text-ink/85 leading-relaxed">
+        <p><strong>Human-in-the-Loop Approach:</strong> FEELAUTHIA uses AI collaboratively to accelerate visual exploration and text drafting—while the concept, four-phase framework, and the <strong>heart, soul, and vulnerability of Cleo, Luna, and Mills are completely human-made</strong>.</p>
+        <ul class="list-disc list-inside space-y-1.5">
+          <li><strong>Concept &amp; Narrative:</strong> Created and directed by the human FEELAUTHIA team.</li>
+          <li><strong>Visual Development Helpers:</strong> Higgsfield / GPT Image 2.5 Sunburst, Midjourney, and Flow Gemini / Nano Banana Pro 2.1—guided and curated by human art direction.</li>
+          <li><strong>Editorial Limits:</strong> Psychology references are simplified for warm everyday reflection and are not clinical advice.</li>
+        </ul>
+      </div>
+      <div class="text-right">
+        <button type="button" data-close-modal class="comic-btn bg-gold text-ink font-display font-bold px-6 py-2.5 rounded-full text-sm">
+          Got It
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN APPLICATION SCRIPT
+       ========================================================================= -->
+  <script>
+    /**
+     * =========================================================================
+     * SITE_CONFIG — CENTRALIZED CUSTOMIZATION HUB FOR FEELAUTHIA
+     * =========================================================================
+     * Place your custom PNG/JPG files inside an "assets/" folder next to
+     * index.html and paste their paths below. Leave any value as "" to keep
+     * the charming built-in cartoon SVG illustrations automatically!
+     */
+    const SITE_CONFIG = {
+      brandName: "FEELAUTHIA",
+      tagline: "Find The Light Inside You",
+
+      // Social Media
+      instagramUrl: "", // e.g. "https://instagram.com/feelauthia"
+
+      // External Marketplace Links (Our Products Page)
+      marketplace: {
+        bookShopeeUrl: "",        // e.g. "https://shopee.co.id/feelauthia-journal"
+        bookTokopediaUrl: "",     // e.g. "https://www.tokopedia.com/feelauthia-journal"
+        keychainShopeeUrl: "",    // e.g. "https://shopee.co.id/feelauthia-keychain"
+        keychainTokopediaUrl: ""  // e.g. "https://www.tokopedia.com/feelauthia-keychain"
+      },
+
+      // Reader Feedback Configuration (Direct Google Form Submission)
+      feedbackEmail: "b.a.qowy@gmail.com",
+      googleFormActionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfq5MmxZFUU6mMhoOFaEl7P-eBDvNAVmVHBMaIz9EofaUuycA/formResponse",
+      googleFormEmbedUrl: "",     // Optional: paste embed URL here if you want raw Google Form iframe
+      googleFormDirectUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfq5MmxZFUU6mMhoOFaEl7P-eBDvNAVmVHBMaIz9EofaUuycA/viewform",
+      googleFormEntries: {
+        character: "entry.546726150",
+        feeling: "entry.1651953733",
+        enjoyed: "entry.710428778",
+        product: "entry.1031323330",
+        sensoryItem: "entry.962178383",
+        futureTopic: "entry.2005174637",
+        creatorNote: "entry.609096638"
+      },
+
+      // Custom Artwork Slots (Automatic fallback to built-in SVGs if "" or missing)
+      images: {
+        heroGroup: "",  // e.g. "assets/hero-trio.png"
+        cleo: "",       // e.g. "assets/cleo.png"
+        luna: "",       // e.g. "assets/luna.png"
+        mills: "",      // e.g. "assets/mills.png"
+        scene1: "",     // e.g. "assets/chapter-1.png"
+        scene2: "",     // e.g. "assets/chapter-2.png"
+        scene3: "",     // e.g. "assets/chapter-3.png"
+        scene4: "",     // e.g. "assets/chapter-4.png"
+        scene5: "",     // e.g. "assets/chapter-5.png"
+        scene6: "",     // e.g. "assets/chapter-6.png"
+        bookCover: ""   // e.g. "assets/journal-cover.png"
+      },
+
+      // Behind FEELAUTHIA — 3 Creators (2 Men, 1 Woman)
+      // Drop real creator photos into assets/ and paste paths into photo: ""
+      team: [
+        {
+          id: "abella",
+          name: "Abella Vania",
+          role: "Concept & Story Developer",
+          photoSlotLabel: "Photo Slot: assets/abella.jpg",
+          avatarStyle: "woman",
+          photo: "", // e.g. "assets/abella.jpg"
+          badgeBg: "bg-[#FCEEF0] text-luna",
+          bio: "Shaped the original concept and emotional promise of FEELAUTHIA—ensuring every chapter and journal spread feels like a comforting, judgment-free safe space.",
+          quote: "\"Everyone deserves a quiet room where their shoulders can finally drop.\""
+        },
+        {
+          id: "audie",
+          name: "Audie Siswanto",
+          role: "Story & Narrative Developer",
+          photoSlotLabel: "Photo Slot: assets/audie.jpg",
+          avatarStyle: "man1",
+          photo: "", // e.g. "assets/audie.jpg"
+          badgeBg: "bg-[#FFF4E8] text-amberWarm",
+          bio: "Develops the grounded narrative architecture and realistic character arcs—keeping Cleo, Luna, and Mills close to real human life without forced toxic positivity.",
+          quote: "\"Real hope only lands when we're honest about the messy parts.\""
+        },
+        {
+          id: "bilal",
+          name: "Bilal Abdul Qowy",
+          role: "Visual & World Developer",
+          photoSlotLabel: "Photo Slot: assets/bilal.jpg",
+          avatarStyle: "man2",
+          photo: "", // e.g. "assets/bilal.jpg"
+          badgeBg: "bg-[#EFF5FF] text-cleo",
+          bio: "Brings FEELAUTHIA's cozy corner-café world, expressive cartoon character silhouettes, and tactile sensory merchandise visuals to life.",
+          quote: "\"Sometimes a picture holds the feeling words haven't found yet.\""
+        }
+      ]
+    };
+
+    /* =========================================================================
+       1. TRUE MULTI-PAGE HASH ROUTER
+       ========================================================================= */
+    const ROUTES = {
+      home:     { label: "Home",              sectionId: "page-home" },
+      story:    { label: "Visual Novel",      sectionId: "page-story" },
+      products: { label: "Our Products",      sectionId: "page-products" },
+      game:     { label: "Mini-Game",         sectionId: "page-game" },
+      behind:   { label: "Behind Feelauthia", sectionId: "page-behind" },
+      feedback: { label: "Feedback",          sectionId: "page-feedback" }
+    };
+
+    let currentRoute = "home";
+    let gameController = null;
+
+    function navigateTo(routeKey, updateHash = true) {
+      const target = ROUTES[routeKey] ? routeKey : "home";
+      currentRoute = target;
+
+      if (updateHash && window.location.hash !== `#${target}`) {
+        window.location.hash = `#${target}`;
+      }
+
+      // Render ONLY ONE page-view at a time
+      document.querySelectorAll(".page-view").forEach((sec) => {
+        sec.classList.toggle("active", sec.getAttribute("data-page") === target);
+      });
+
+      // Sync active pill styling on desktop & mobile nav links
+      document.querySelectorAll("[data-route]").forEach((link) => {
+        if (link.classList.contains("nav-pill")) {
+          link.classList.toggle("is-current", link.getAttribute("data-route") === target);
+        }
+      });
+
+      // Update mobile page badge
+      const mobileBadge = document.getElementById("mobile-page-badge");
+      if (mobileBadge) mobileBadge.textContent = ROUTES[target].label;
+
+      // Show Visual Novel sticky progress bar ONLY on #story
+      const vnStrip = document.getElementById("story-progress-strip");
+      if (vnStrip) vnStrip.classList.toggle("hidden", target !== "story");
+
+      // Close mobile drawer on route switch
+      closeMobileDrawer();
+
+      // Smoothly scroll to the top of the newly opened page
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Page-specific lifecycle hooks
+      if (target === "story") {
+        updateStoryProgress();
+        revealVisibleStoryPanels();
+      }
+
+      if (gameController) {
+        if (target === "game") {
+          requestAnimationFrame(() => gameController.onShow());
+        } else {
+          gameController.onHide();
+        }
+      }
+    }
+
+    function initRouter() {
+      const getHashRoute = () => {
+        const clean = (window.location.hash || "").replace(/^#/, "").trim().toLowerCase();
+        return ROUTES[clean] ? clean : "home";
+      };
+
+      document.addEventListener("click", (e) => {
+        const link = e.target.closest("a[data-route]");
+        if (!link) return;
+        e.preventDefault();
+        navigateTo(link.getAttribute("data-route"), true);
+      });
+
+      window.addEventListener("hashchange", () => {
+        navigateTo(getHashRoute(), false);
+      });
+
+      navigateTo(getHashRoute(), false);
+    }
+
+    /* =========================================================================
+       2. CUSTOM TOAST & IFRAME-SAFE CLIPBOARD HELPER
+       ========================================================================= */
+    let toastTimer = null;
+    function showToast(msg, emoji = "✨") {
+      const pill = document.getElementById("toast-pill");
+      const text = document.getElementById("toast-text");
+      const icon = document.getElementById("toast-emoji");
+      if (!pill || !text) return;
+      icon.textContent = emoji;
+      text.textContent = msg;
+      pill.classList.remove("hidden");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => pill.classList.add("hidden"), 2900);
+    }
+
+    function copyTextSafe(str) {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = str;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast("Quote copied to clipboard!", "📋");
+      } catch (err) {
+        showToast("Please select and copy the quote manually.", "💛");
+      }
+    }
+
+    /* =========================================================================
+       3. WEB AUDIO SYNTHESIZER (Mechanical Keycap Click & Soft Game Chimes)
+       ========================================================================= */
+    const SoundFX = (() => {
+      let ctx = null;
+      let enabled = true;
+
+      function getCtx() {
+        if (!enabled) return null;
+        try {
+          if (!ctx) {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (AC) ctx = new AC();
+          }
+          if (ctx && ctx.state === "suspended") ctx.resume();
+          return ctx;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      return {
+        isOn: () => enabled,
+        toggle: () => {
+          enabled = !enabled;
+          return enabled;
+        },
+        // Realistic tactile mechanical keyboard switch "click-thock"
+        playMechanicalSwitch: () => {
+          const c = getCtx();
+          if (!c) return;
+          const now = c.currentTime;
+
+          // Sharp tactile click transient
+          const clickOsc = c.createOscillator();
+          const clickGain = c.createGain();
+          clickOsc.type = "square";
+          clickOsc.frequency.setValueAtTime(1650, now);
+          clickOsc.frequency.exponentialRampToValueAtTime(420, now + 0.016);
+          clickGain.gain.setValueAtTime(0.09, now);
+          clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.018);
+          clickOsc.connect(clickGain);
+          clickGain.connect(c.destination);
+          clickOsc.start(now);
+          clickOsc.stop(now + 0.02);
+
+          // Warm bottom-out keycap "thock"
+          const thockOsc = c.createOscillator();
+          const thockGain = c.createGain();
+          thockOsc.type = "triangle";
+          thockOsc.frequency.setValueAtTime(520, now + 0.008);
+          thockOsc.frequency.exponentialRampToValueAtTime(135, now + 0.052);
+          thockGain.gain.setValueAtTime(0.24, now + 0.008);
+          thockGain.gain.exponentialRampToValueAtTime(0.001, now + 0.058);
+          thockOsc.connect(thockGain);
+          thockGain.connect(c.destination);
+          thockOsc.start(now + 0.008);
+          thockOsc.stop(now + 0.062);
+        },
+        // Warm ascending chime when Cleo escapes through the Golden Door
+        playEscapeChime: () => {
+          const c = getCtx();
+          if (!c) return;
+          const now = c.currentTime;
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+            const osc = c.createOscillator();
+            const g = c.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, now + i * 0.055);
+            g.gain.setValueAtTime(0.14, now + i * 0.055);
+            g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.055 + 0.24);
+            osc.connect(g);
+            g.connect(c.destination);
+            osc.start(now + i * 0.055);
+            osc.stop(now + i * 0.055 + 0.25);
+          });
+        },
+        // Gentle low boop when nudging the dark tangled line
+        playGentleBump: () => {
+          const c = getCtx();
+          if (!c) return;
+          const now = c.currentTime;
+          const osc = c.createOscillator();
+          const g = c.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(210, now);
+          osc.frequency.exponentialRampToValueAtTime(98, now + 0.15);
+          g.gain.setValueAtTime(0.18, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.17);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + 0.18);
+        }
+      };
+    })();
+
+    function syncAllSoundButtons(isOn) {
+      const kBtn = document.getElementById("keycap-sound-toggle");
+      const gBtn = document.getElementById("g-sound-btn");
+      if (kBtn) kBtn.textContent = isOn ? "🔊 Click SFX On" : "🔇 Click SFX Off";
+      if (gBtn) gBtn.textContent = isOn ? "🔊 Sound On" : "🔇 Sound Off";
+    }
+
+    /* =========================================================================
+       4. BLINKING STARS (ALL SCREENS) & DESKTOP-ONLY PARALLAX (>= 1024px)
+       ========================================================================= */
+    function initSkyAndParallax() {
+      const layer = document.getElementById("sky-backdrop");
+      if (layer) {
+        const starSpecs = [
+          { x: 5,  y: 12, s: 13, dur: 2.9, del: 0.1, col: "#F0A830" },
+          { x: 93, y: 15, s: 14, dur: 3.6, del: 0.8, col: "#F0A830" },
+          { x: 16, y: 34, s: 10, dur: 3.1, del: 1.5, col: "#2D6CDF" },
+          { x: 86, y: 38, s: 11, dur: 2.7, del: 0.4, col: "#F0A830" },
+          { x: 7,  y: 62, s: 12, dur: 3.9, del: 1.2, col: "#F0A830" },
+          { x: 94, y: 66, s: 13, dur: 3.2, del: 1.9, col: "#8E2C3E" },
+          { x: 24, y: 84, s: 10, dur: 2.8, del: 0.6, col: "#F0A830" },
+          { x: 78, y: 88, s: 12, dur: 3.5, del: 1.4, col: "#58896B" },
+          { x: 52, y: 10, s: 9,  dur: 3.3, del: 2.1, col: "#F0A830" }
+        ];
+
+        starSpecs.forEach((st, idx) => {
+          const el = document.createElement("div");
+          el.className = "absolute twinkle-star";
+          el.style.left = `${st.x}%`;
+          el.style.top = `${st.y}%`;
+          el.style.setProperty("--tw-dur", `${st.dur}s`);
+          el.style.setProperty("--tw-delay", `${st.del}s`);
+          if (idx % 2 === 0) el.setAttribute("data-parallax", idx % 4 === 0 ? "0.14" : "-0.14");
+          el.innerHTML = `<svg width="${st.s}" height="${st.s}" viewBox="0 0 20 20" fill="${st.col}" opacity="0.6">
+            <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z"/>
+          </svg>`;
+          layer.appendChild(el);
+        });
+      }
+
+      const parallaxEls = Array.from(document.querySelectorAll("[data-parallax]"));
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let mx = 0, my = 0, sy = 0, raf = null;
+
+      function applyParallax() {
+        raf = null;
+        if (window.innerWidth < 1024 || reduceMotion.matches) {
+          parallaxEls.forEach((el) => { el.style.transform = ""; });
+          return;
+        }
+        parallaxEls.forEach((el) => {
+          const factor = parseFloat(el.getAttribute("data-parallax")) || 0.15;
+          const tx = mx * factor * 28;
+          const ty = Math.max(-44, Math.min(44, sy * factor * 0.16 + my * factor * 28));
+          el.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0)`;
+        });
+      }
+
+      function scheduleParallax() {
+        if (!raf) raf = requestAnimationFrame(applyParallax);
+      }
+
+      window.addEventListener("mousemove", (e) => {
+        if (window.innerWidth < 1024 || reduceMotion.matches) return;
+        mx = (e.clientX / window.innerWidth) - 0.5;
+        my = (e.clientY / window.innerHeight) - 0.5;
+        scheduleParallax();
+      }, { passive: true });
+
+      window.addEventListener("scroll", () => {
+        sy = window.scrollY;
+        if (currentRoute === "story") {
+          updateStoryProgress();
+          revealVisibleStoryPanels();
+        }
+        if (window.innerWidth >= 1024 && !reduceMotion.matches) {
+          scheduleParallax();
+        }
+      }, { passive: true });
+
+      window.addEventListener("resize", scheduleParallax);
+    }
+
+    /* =========================================================================
+       5. APPLY SITE_CONFIG: ARTWORK, LINKS, CREATOR CARDS & GOOGLE FORM
+       ========================================================================= */
+    function createCreatorPortraitSVG(style) {
+      if (style === "woman") {
+        return `<svg viewBox="0 0 140 140" class="w-full h-full">
+          <rect width="140" height="140" fill="#FCEEF0"/>
+          <path d="M32 62 Q32 22 70 22 Q108 22 108 62 L112 118 L28 118 Z" fill="#462F28" stroke="#2B2320" stroke-width="3"/>
+          <path d="M26 140 Q70 104 114 140 Z" fill="#8E2C3E" stroke="#2B2320" stroke-width="3"/>
+          <circle cx="70" cy="64" r="29" fill="#F5CEAE" stroke="#2B2320" stroke-width="3"/>
+          <path d="M40 57 Q56 42 70 46 Q86 42 100 57 Q94 33 70 31 Q46 33 40 57 Z" fill="#462F28" stroke="#2B2320" stroke-width="2.5"/>
+          <circle cx="59" cy="65" r="3.4" fill="#2B2320"/>
+          <circle cx="81" cy="65" r="3.4" fill="#2B2320"/>
+          <ellipse cx="50" cy="72" rx="4.5" ry="2.5" fill="#E88B72" opacity="0.65"/>
+          <ellipse cx="90" cy="72" rx="4.5" ry="2.5" fill="#E88B72" opacity="0.65"/>
+          <path d="M62 79 Q70 86 78 79" fill="none" stroke="#2B2320" stroke-width="2.8" stroke-linecap="round"/>
+        </svg>`;
+      }
+      if (style === "man1") {
+        return `<svg viewBox="0 0 140 140" class="w-full h-full">
+          <rect width="140" height="140" fill="#FFF4E8"/>
+          <path d="M26 140 Q70 104 114 140 Z" fill="#C96B36" stroke="#2B2320" stroke-width="3"/>
+          <circle cx="70" cy="64" r="30" fill="#ECC09B" stroke="#2B2320" stroke-width="3"/>
+          <path d="M38 56 Q44 24 70 26 Q98 26 102 56 Q90 42 70 43 Q50 42 38 56 Z" fill="#3B2E2A" stroke="#2B2320" stroke-width="2.5"/>
+          <rect x="49" y="57" width="18" height="14" rx="4" fill="none" stroke="#2B2320" stroke-width="2.5"/>
+          <rect x="73" y="57" width="18" height="14" rx="4" fill="none" stroke="#2B2320" stroke-width="2.5"/>
+          <line x1="67" y1="64" x2="73" y2="64" stroke="#2B2320" stroke-width="2.5"/>
+          <circle cx="58" cy="64" r="3" fill="#2B2320"/>
+          <circle cx="82" cy="64" r="3" fill="#2B2320"/>
+          <path d="M62 79 Q70 85 78 79" fill="none" stroke="#2B2320" stroke-width="2.8" stroke-linecap="round"/>
+        </svg>`;
+      }
+      return `<svg viewBox="0 0 140 140" class="w-full h-full">
+        <rect width="140" height="140" fill="#EFF5FF"/>
+        <path d="M26 140 Q70 104 114 140 Z" fill="#2D6CDF" stroke="#2B2320" stroke-width="3"/>
+        <circle cx="70" cy="64" r="30" fill="#F2C8A2" stroke="#2B2320" stroke-width="3"/>
+        <path d="M39 58 Q42 26 72 28 Q100 28 101 58 Q88 44 70 46 Q52 44 39 58 Z" fill="#323B4B" stroke="#2B2320" stroke-width="2.5"/>
+        <circle cx="59" cy="65" r="3.5" fill="#2B2320"/>
+        <circle cx="81" cy="65" r="3.5" fill="#2B2320"/>
+        <path d="M61 78 Q70 85 79 78" fill="none" stroke="#2B2320" stroke-width="2.8" stroke-linecap="round"/>
+      </svg>`;
+    }
+
+    function applySiteConfig() {
+      // Custom Image Swaps with Automatic SVG Fallback
+      document.querySelectorAll("[data-config-img]").forEach((imgEl) => {
+        const key = imgEl.getAttribute("data-config-img");
+        const src = SITE_CONFIG.images[key];
+        const fallback = document.querySelector(`[data-fallback-for="${key}"]`);
+        if (src && src.trim() !== "") {
+          imgEl.src = src;
+          imgEl.onload = () => {
+            imgEl.classList.remove("hidden");
+            if (fallback) fallback.classList.add("hidden");
+          };
+          imgEl.onerror = () => {
+            imgEl.classList.add("hidden");
+            if (fallback) fallback.classList.remove("hidden");
+          };
+        }
+      });
+
+      // Marketplace Buttons
+      document.querySelectorAll("[data-market-link]").forEach((btn) => {
+        const key = btn.getAttribute("data-market-link");
+        const url = SITE_CONFIG.marketplace[key];
+        if (url && url.trim() !== "") {
+          btn.href = url;
+        } else {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            showToast("Add your Shopee or Tokopedia link in SITE_CONFIG.marketplace!", "🛍️");
+          });
+        }
+      });
+
+      // Footer Instagram Link
+      const igLink = document.getElementById("footer-ig-link");
+      if (igLink) {
+        if (SITE_CONFIG.instagramUrl && SITE_CONFIG.instagramUrl.trim() !== "") {
+          igLink.href = SITE_CONFIG.instagramUrl;
+        } else {
+          igLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            showToast("Add your Instagram URL in SITE_CONFIG.instagramUrl!", "📸");
+          });
+        }
+      }
+
+      // Behind FEELAUTHIA 3-Creator Cards
+      const teamGrid = document.getElementById("team-cards-grid");
+      if (teamGrid) {
+        teamGrid.innerHTML = "";
+        SITE_CONFIG.team.forEach((member) => {
+          const card = document.createElement("article");
+          card.className = "comic-card p-6 text-center flex flex-col justify-between";
+          const hasPhoto = member.photo && member.photo.trim() !== "";
+          card.innerHTML = `
+            <div>
+              <div class="w-36 h-36 mx-auto mb-3 rounded-full border-[3px] border-ink shadow-[4px_4px_0_#2B2320] overflow-hidden bg-paper flex items-center justify-center">
+                ${hasPhoto
+                  ? `<img src="${member.photo}" alt="${member.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><div style="display:none" class="w-full h-full">${createCreatorPortraitSVG(member.avatarStyle)}</div>`
+                  : createCreatorPortraitSVG(member.avatarStyle)
+                }
+              </div>
+              ${!hasPhoto ? `<span class="inline-block mb-2 px-2.5 py-0.5 rounded-full bg-paperDeep border border-ink/25 text-[10px] font-bold text-ink/65">${member.photoSlotLabel}</span>` : ""}
+              <div>
+                <span class="inline-block px-3 py-1 rounded-full ${member.badgeBg} border-2 border-ink font-display text-xs font-bold mb-2">
+                  ${member.role}
+                </span>
+              </div>
+              <h3 class="font-display font-bold text-2xl text-ink">${member.name}</h3>
+              <p class="text-sm text-ink/80 mt-2 leading-relaxed">${member.bio}</p>
+            </div>
+            <p class="mt-4 pt-3 border-t-2 border-dashed border-ink/15 font-display text-sm text-ink/75">${member.quote}</p>
+          `;
+          teamGrid.appendChild(card);
+        });
+      }
+
+      // Google Form Live Embed vs Preview Mode
+      const liveCard = document.getElementById("gf-live-card");
+      const previewCard = document.getElementById("gf-preview-card");
+      const iframe = document.getElementById("gf-iframe");
+      const directLink = document.getElementById("gf-direct-link");
+
+      if (SITE_CONFIG.googleFormEmbedUrl && SITE_CONFIG.googleFormEmbedUrl.trim() !== "") {
+        iframe.src = SITE_CONFIG.googleFormEmbedUrl;
+        directLink.href = SITE_CONFIG.googleFormDirectUrl || SITE_CONFIG.googleFormEmbedUrl;
+        liveCard.classList.remove("hidden");
+        previewCard.classList.add("hidden");
+      }
+
+      const yr = document.getElementById("yr-now");
+      if (yr) yr.textContent = new Date().getFullYear();
+    }
+
+    /* =========================================================================
+       6. MOBILE MENU DRAWER, GLOBAL MODALS & 4–6 BREATHE CONTROLLER
+       ========================================================================= */
+    function closeMobileDrawer() {
+      const drawer = document.getElementById("mobile-drawer");
+      const btn = document.getElementById("mobile-menu-toggle");
+      const openIco = document.getElementById("burger-open");
+      const closeIco = document.getElementById("burger-close");
+      if (!drawer) return;
+      drawer.classList.add("hidden");
+      if (openIco) openIco.classList.remove("hidden");
+      if (closeIco) closeIco.classList.add("hidden");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+
+    function initNavModalsAndBreathing() {
+      const toggleBtn = document.getElementById("mobile-menu-toggle");
+      const drawer = document.getElementById("mobile-drawer");
+      const openIco = document.getElementById("burger-open");
+      const closeIco = document.getElementById("burger-close");
+
+      if (toggleBtn && drawer) {
+        toggleBtn.addEventListener("click", () => {
+          const nowHidden = drawer.classList.toggle("hidden");
+          openIco.classList.toggle("hidden", !nowHidden);
+          closeIco.classList.toggle("hidden", nowHidden);
+          toggleBtn.setAttribute("aria-expanded", String(!nowHidden));
+        });
+      }
+
+      // Guided 4s Inhale / 6s Exhale Breathing Orb
+      const orb = document.getElementById("modal-breathe-orb");
+      const phaseEl = document.getElementById("modal-breathe-phase");
+      const numEl = document.getElementById("modal-breathe-num");
+      const breathBtn = document.getElementById("modal-breathe-toggle");
+      let breathInterval = null;
+      let isBreathing = false;
+
+      function resetBreathOrb() {
+        clearInterval(breathInterval);
+        isBreathing = false;
+        if (breathBtn) breathBtn.textContent = "▶ Start Breathing";
+        if (orb) {
+          orb.style.transitionDuration = "0.4s";
+          orb.style.transform = "scale(1)";
+          orb.style.backgroundColor = "rgba(45, 108, 223, 0.25)";
+        }
+        if (phaseEl) phaseEl.textContent = "Ready";
+        if (numEl) numEl.textContent = "4–6";
+      }
+
+      breathBtn?.addEventListener("click", () => {
+        if (isBreathing) {
+          resetBreathOrb();
+          return;
+        }
+        isBreathing = true;
+        breathBtn.textContent = "⏹ Stop";
+        let sec = 0;
+
+        function tick() {
+          const cycle = sec % 10; // 0..3 Inhale (4s), 4..9 Exhale (6s)
+          if (cycle === 0) {
+            orb.style.transitionDuration = "4s";
+            orb.style.transform = "scale(1.45)";
+            orb.style.backgroundColor = "rgba(240, 168, 48, 0.42)";
+          } else if (cycle === 4) {
+            orb.style.transitionDuration = "6s";
+            orb.style.transform = "scale(0.92)";
+            orb.style.backgroundColor = "rgba(88, 137, 107, 0.34)";
+          }
+          if (cycle < 4) {
+            phaseEl.textContent = "Inhale";
+            numEl.textContent = String(4 - cycle);
+          } else {
+            phaseEl.textContent = "Exhale";
+            numEl.textContent = String(10 - cycle);
+          }
+          sec++;
+        }
+
+        tick();
+        breathInterval = setInterval(tick, 1000);
+      });
+
+      function closeAllModals() {
+        document.querySelectorAll("[role='dialog']").forEach((m) => m.classList.add("hidden"));
+        resetBreathOrb();
+      }
+
+      document.querySelectorAll("[data-open-modal]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const modal = document.getElementById(btn.getAttribute("data-open-modal"));
+          if (modal) modal.classList.remove("hidden");
+        });
+      });
+
+      document.querySelectorAll("[data-close-modal]").forEach((btn) => {
+        btn.addEventListener("click", closeAllModals);
+      });
+
+      document.querySelectorAll("[role='dialog']").forEach((m) => {
+        m.addEventListener("click", (e) => {
+          if (e.target === m) closeAllModals();
+        });
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAllModals();
+      });
+    }
+
+    /* =========================================================================
+       7. PAGE 1: DAILY QUOTE FROM THE CAFÉ
+       ========================================================================= */
+    function initDailyQuotes() {
+      const quotes = [
+        { text: "Hi. I almost didn't open this. If you're here, that already counts as a small brave thing.", speaker: "— Cleo, The Insecure Light", tag: "Small Courage", color: "text-cleo" },
+        { text: "Warm doesn't mean fake. If it isn't true, it won't land. Aim for honest and kind.", speaker: "— Luna, The Grounding Smile", tag: "Self-Kindness", color: "text-luna" },
+        { text: "Plot twist: I compare myself too. Even stars check the sky for brighter stars.", speaker: "— Mills, The Bright Star", tag: "Comparison", color: "text-mills" },
+        { text: "Lowering the hoodie didn't make me confident. It made me honest. That was enough.", speaker: "— Cleo, The Insecure Light", tag: "Authenticity", color: "text-cleo" },
+        { text: "You don't have to be done with comparing. You only have to notice it sooner.", speaker: "— Luna, The Grounding Smile", tag: "Overthinking", color: "text-luna" },
+        { text: "Start small. The first time I was honest about feeling nervous, nothing exploded.", speaker: "— Mills, The Bright Star", tag: "Courage", color: "text-amberWarm" },
+        { text: "We just need to stop hiding from the light that is already inside us.", speaker: "— FEELAUTHIA", tag: "Inner Light", color: "text-cleo" }
+      ];
+
+      let idx = 0;
+      const bodyEl = document.getElementById("quote-body");
+      const spEl = document.getElementById("quote-speaker");
+      const tagEl = document.getElementById("quote-tag");
+
+      document.getElementById("btn-next-quote")?.addEventListener("click", () => {
+        idx = (idx + 1) % quotes.length;
+        const q = quotes[idx];
+        bodyEl.textContent = `"${q.text}"`;
+        spEl.textContent = q.speaker;
+        spEl.className = `font-bold text-sm ${q.color}`;
+        tagEl.textContent = q.tag;
+      });
+
+      document.getElementById("btn-copy-quote")?.addEventListener("click", () => {
+        const q = quotes[idx];
+        copyTextSafe(`"${q.text}" ${q.speaker} — FEELAUTHIA`);
+      });
+    }
+
+    /* =========================================================================
+       8. PAGE 2: VISUAL NOVEL PROGRESS & SCROLL REVEAL
+       ========================================================================= */
+    function updateStoryProgress() {
+      const fill = document.getElementById("story-progress-fill");
+      const pctEl = document.getElementById("story-progress-pct");
+      if (!fill || currentRoute !== "story") return;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const pct = Math.max(10, Math.min(100, Math.round((window.scrollY / maxScroll) * 100)));
+      fill.style.width = `${pct}%`;
+      if (pctEl) pctEl.textContent = `${pct}%`;
+    }
+
+    function revealVisibleStoryPanels() {
+      document.querySelectorAll("#page-story .vn-panel").forEach((panel) => {
+        const rect = panel.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.92) {
+          panel.classList.add("revealed");
+        }
+      });
+    }
+
+    /* =========================================================================
+       9. PAGE 3: PRODUCTS (4-Phase Loop Tabs, 5-Page Flipbook & Keycap Toy)
+       ========================================================================= */
+    function initProductsPage() {
+      // A. Interactive 4-Phase Identity Loop Tabs
+      const phases = {
+        1: {
+          title: "Phase 1 · Regulate — Quiet the Noise First",
+          bg: "bg-[#EFF5FF]",
+          badge: "bg-cleo text-white",
+          guide: "Guided by Cleo",
+          summary: "When your nervous system feels on alert, journaling turns into neat rumination. Phase 1 gently settles your body so self-reflection feels safe.",
+          theories: [
+            "Polyvagal Theory (Stephen Porges) — Nervous system safety first",
+            "ACT Cognitive Defusion (Steven C. Hayes) — Notice thoughts without obeying them",
+            "Self-Compassion (Kristin Neff) — Mindfulness, common humanity & self-kindness",
+            "Affect Labeling — Putting precise words on feelings lowers their intensity"
+          ]
+        },
+        2: {
+          title: "Phase 2 · Deconstruct — Strip Away Borrowed Identities",
+          bg: "bg-[#FCEEF0]",
+          badge: "bg-luna text-white",
+          guide: "Guided by Mills & Luna",
+          summary: "Spot which 'shoulds' and masks you picked up to earn approval, and turn painful envy into helpful information.",
+          theories: [
+            "Social Comparison Theory (Leon Festinger) — Highlight reel vs. behind-the-scenes",
+            "Persona & Shadow (Carl Jung) — Spotting exhausting social masks",
+            "Real Self vs. Ideal Self (Carl Rogers) — Closing the gap that feeds anxiety",
+            "Johari Window (Luft & Ingham) — Discovering blind-spot strengths"
+          ]
+        },
+        3: {
+          title: "Phase 3 · Excavate — Identify the Real Self",
+          bg: "bg-[#FFF4E8]",
+          badge: "bg-amberWarm text-white",
+          guide: "Guided by Luna",
+          summary: "Look for what remains when applause stops: your lived values, core psychological needs, and quiet innate strengths.",
+          theories: [
+            "ACT Values vs. Goals — Directions you walk, not just checkboxes",
+            "Self-Determination Theory (Deci & Ryan) — Autonomy, Competence & Relatedness",
+            "Signature Strengths (Seligman & Peterson) — Honoring quiet strengths",
+            "Energy & Drain Mapping — Tracking what genuinely charges you"
+          ]
+        },
+        4: {
+          title: "Phase 4 · Integrate — Claim and Test the Identity",
+          bg: "bg-[#FFF8DF]",
+          badge: "bg-gold text-ink",
+          guide: "Guided by All Three",
+          summary: "Confidence rarely arrives first—it follows small, repeated evidence. Rewrite your story and run tiny 'lower the hoodie' experiments.",
+          theories: [
+            "Narrative Identity (Dan McAdams) — Shifting from contamination to growth stories",
+            "CBT Behavioral Experiments (Judith Beck) — Testing anxious predictions safely",
+            "The Courage Ladder — 7 tiny real-world steps from easiest to bravest"
+          ]
+        }
+      };
+
+      const detailBox = document.getElementById("phase-detail-box");
+      const phaseBtns = document.querySelectorAll(".phase-tab-btn");
+
+      function renderPhase(num) {
+        const p = phases[num];
+        if (!detailBox || !p) return;
+        detailBox.className = `comic-card-sm ${p.bg} p-5 sm:p-6 space-y-3`;
+        detailBox.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 class="font-display font-bold text-xl text-ink">${p.title}</h4>
+            <span class="px-3 py-1 rounded-full ${p.badge} border-2 border-ink font-display text-xs font-bold">${p.guide}</span>
+          </div>
+          <p class="text-sm text-ink/85 leading-relaxed">${p.summary}</p>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs sm:text-sm font-semibold text-ink/90">
+            ${p.theories.map((t) => `<li class="bg-card/90 rounded-xl border border-ink/20 px-3 py-2">✦ ${t}</li>`).join("")}
+          </ul>
+        `;
+
+        phaseBtns.forEach((b) => {
+          const isActive = b.getAttribute("data-phase-tab") === String(num);
+          b.className = `phase-tab-btn comic-btn font-display font-bold px-4 py-3 rounded-2xl text-sm text-left ${isActive ? p.badge : "bg-paperDeep text-ink"}`;
+        });
+      }
+
+      phaseBtns.forEach((b) => b.addEventListener("click", () => renderPhase(b.getAttribute("data-phase-tab"))));
+      renderPhase(1);
+
+      // B. 5-Page "Peek Inside the Book" Flipbook
+      let flipIdx = 0;
+      const flipPages = document.querySelectorAll("[data-flip-page]");
+      const flipCounter = document.getElementById("flip-counter");
+
+      function showFlipPage(idx) {
+        flipIdx = (idx + flipPages.length) % flipPages.length;
+        flipPages.forEach((p, i) => p.classList.toggle("hidden", i !== flipIdx));
+        if (flipCounter) flipCounter.textContent = `${flipIdx + 1} / ${flipPages.length}`;
+      }
+
+      document.getElementById("flip-prev-btn")?.addEventListener("click", () => showFlipPage(flipIdx - 1));
+      document.getElementById("flip-next-btn")?.addEventListener("click", () => showFlipPage(flipIdx + 1));
+
+      // Flipbook Page 3: Interactive Feelings Word Bank
+      const feelingsGroups = [
+        { label: "Heavy", tone: "bg-[#FCEEF0] text-luna", words: ["exposed", "small", "anxious", "overwhelmed", "left out", "drained"] },
+        { label: "In Between", tone: "bg-[#FFF4E8] text-amberWarm", words: ["restless", "uncertain", "bittersweet", "hesitant", "curious", "guarded"] },
+        { label: "Lighter", tone: "bg-[#EBF7EF] text-sage", words: ["safe", "relieved", "calm", "warm", "understood", "hopeful"] }
+      ];
+
+      const bankGrid = document.getElementById("feelings-bank-grid");
+      const bankReadout = document.getElementById("feelings-selected-readout");
+      const pickedFeelings = new Set();
+
+      if (bankGrid) {
+        feelingsGroups.forEach((grp) => {
+          const box = document.createElement("div");
+          box.className = "bg-card rounded-xl border-2 border-ink/20 p-3.5 space-y-2.5";
+          box.innerHTML = `<span class="inline-block px-2.5 py-0.5 rounded-full ${grp.tone} border border-ink/25 font-display text-xs font-bold">${grp.label}</span>`;
+          const wrap = document.createElement("div");
+          wrap.className = "flex flex-wrap gap-1.5";
+          grp.words.forEach((w) => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.textContent = w;
+            chip.className = "px-3 py-1 rounded-full bg-paperDeep border-2 border-ink/35 font-display text-xs font-semibold transition-colors";
+            chip.addEventListener("click", () => {
+              if (pickedFeelings.has(w)) {
+                pickedFeelings.delete(w);
+                chip.classList.remove("bg-cleo", "text-white", "border-ink");
+                chip.classList.add("bg-paperDeep", "text-ink", "border-ink/35");
+              } else {
+                pickedFeelings.add(w);
+                chip.classList.remove("bg-paperDeep", "text-ink", "border-ink/35");
+                chip.classList.add("bg-cleo", "text-white", "border-ink");
+              }
+              if (bankReadout) {
+                bankReadout.textContent = pickedFeelings.size > 0
+                  ? Array.from(pickedFeelings).join(", ")
+                  : "None yet — tap any word above";
+              }
+            });
+            wrap.appendChild(chip);
+          });
+          box.appendChild(wrap);
+          bankGrid.appendChild(box);
+        });
+      }
+
+      // C. Interactive Mechanical Keyboard Keychain Demo
+      const keyBtn = document.getElementById("keycap-demo-btn");
+      const keyCountEl = document.getElementById("keycap-click-count");
+      const keyPromptEl = document.getElementById("keycap-prompt-text");
+      const sparkleZone = document.getElementById("keycap-sparkle-zone");
+      const keySoundBtn = document.getElementById("keycap-sound-toggle");
+
+      const calmingLines = [
+        "Drop your shoulders one inch. You are safe right here.",
+        "Feel both feet resting solidly on the floor.",
+        "That loud thought is a passing cloud, not a fact.",
+        "Exhale slightly longer than you inhaled.",
+        "You don't need to perform to belong in this room.",
+        "Notice one warm color near you right now.",
+        "Lowering the hoodie starts with one tiny honest breath."
+      ];
+
+      let clicks = 0;
+
+      function spawnKeySparkles() {
+        if (!sparkleZone) return;
+        const icons = ["✨", "⭐", "💛", "🫧"];
+        for (let i = 0; i < 5; i++) {
+          const sp = document.createElement("span");
+          sp.textContent = icons[i % icons.length];
+          sp.className = "sparkle-burst absolute text-lg";
+          sp.style.left = "50%";
+          sp.style.top = "55%";
+          const angle = (Math.PI * 2 * i) / 5 + Math.random() * 0.45;
+          const dist = 50 + Math.random() * 28;
+          sp.style.setProperty("--tx", `${Math.cos(angle) * dist}px`);
+          sp.style.setProperty("--ty", `${Math.sin(angle) * dist - 14}px`);
+          sparkleZone.appendChild(sp);
+          setTimeout(() => sp.remove(), 680);
+        }
+      }
+
+      function pressKeycap() {
+        clicks++;
+        SoundFX.playMechanicalSwitch();
+        if (keyCountEl) keyCountEl.textContent = String(clicks);
+        if (keyPromptEl) keyPromptEl.textContent = `"${calmingLines[(clicks - 1) % calmingLines.length]}"`;
+        if (keyBtn) {
+          keyBtn.classList.add("pressed");
+          setTimeout(() => keyBtn.classList.remove("pressed"), 100);
+        }
+        spawnKeySparkles();
+      }
+
+      keyBtn?.addEventListener("click", pressKeycap);
+
+      keySoundBtn?.addEventListener("click", () => {
+        syncAllSoundButtons(SoundFX.toggle());
+      });
+
+      // Spacebar shortcut while on #products
+      window.addEventListener("keydown", (e) => {
+        if (currentRoute !== "products") return;
+        if (e.code === "Space") {
+          const tag = (document.activeElement && document.activeElement.tagName) || "";
+          if (["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(tag)) return;
+          e.preventDefault();
+          pressKeycap();
+        }
+      });
+    }
+
+    /* =========================================================================
+       10. PAGE 4: MINI-GAME — "ESCAPE THE OVERTHINKING CIRCLE"
+           Proper requestAnimationFrame start/cancel lifecycle so zero loops
+           leak when navigating away from #game.
+       ========================================================================= */
+    function initEscapeCircleGame() {
+      const canvas = document.getElementById("escape-canvas");
+      if (!canvas) return null;
+      const ctx = canvas.getContext("2d");
+
+      const elLevel = document.getElementById("g-level");
+      const elScore = document.getElementById("g-score");
+      const elHealth = document.getElementById("g-health");
+      const elSpeed = document.getElementById("g-speed");
+      const elBest = document.getElementById("g-best");
+      const elMsg = document.getElementById("g-message");
+      const overlay = document.getElementById("g-overlay");
+      const ovBadge = document.getElementById("g-ov-badge");
+      const ovTitle = document.getElementById("g-ov-title");
+      const ovDesc = document.getElementById("g-ov-desc");
+      const startBtn = document.getElementById("g-start-btn");
+      const pauseBtn = document.getElementById("g-pause-btn");
+      const restartBtn = document.getElementById("g-restart-btn");
+      const soundBtn = document.getElementById("g-sound-btn");
+
+      const elLevelupPopup = document.getElementById("g-levelup-popup");
+      const elLevelupTitle = document.getElementById("g-levelup-title");
+      const elLevelupSub = document.getElementById("g-levelup-sub");
+      let levelupTimer = null;
+
+      const BEST_KEY = "feelauthia_escape_best_level";
+      const BEST_SCORE_KEY = "feelauthia_escape_best_score";
+      let bestLevel = 1;
+      let bestScore = 0;
+      try {
+        bestLevel = Math.max(1, parseInt(localStorage.getItem(BEST_KEY) || "1", 10));
+        bestScore = Math.max(0, parseInt(localStorage.getItem(BEST_SCORE_KEY) || "0", 10));
+      } catch (e) {
+        bestLevel = 1;
+        bestScore = 0;
+      }
+      if (elBest) elBest.textContent = String(bestLevel);
+
+      const levelCheers = [
+        'Luna: "You found the golden opening! Breathe and watch the next circle."',
+        'Cleo: "Whoa, my ears stopped drooping—I made it right through!"',
+        'Mills: "Smooth moves! Heads up, the circle is spinning faster now!"',
+        'Luna: "Calm pacing beats rushing. Follow the warm golden light."',
+        'Cleo: "Whoa—the tangled circle switched direction! We\'ve got this!"',
+        'Mills: "Look at you go! That hoodie is staying down today."'
+      ];
+
+      let size = 480;
+      let cx = 240;
+      let cy = 240;
+      let ringR = 166;
+      let rafId = null;
+
+      const skyStars = Array.from({ length: 26 }, (_, i) => ({
+        rx: (Math.sin(i * 19.3) * 0.46 + 0.5),
+        ry: (Math.cos(i * 14.1) * 0.46 + 0.5),
+        r: 1.2 + (i % 3) * 0.85,
+        phase: i * 0.75
+      }));
+
+      // Controls: Keyboard / Touch D-pad / Pointer Drag
+      const keys = { up: false, down: false, left: false, right: false };
+      let pointerActive = false;
+      let pointerX = 240;
+      let pointerY = 240;
+
+      const state = {
+        mode: "idle", // "idle" | "playing" | "paused" | "gameover"
+        level: 1,
+        score: 0,
+        health: 3,
+        doorAngle: -Math.PI / 2 + 0.7,
+        ringDir: 1,
+        baseRotSpeed: 1.02, // rad/sec
+        doorArc: 1.04,      // radians
+        cleoX: 240,
+        cleoY: 240,
+        invulnTimer: 0,
+        wobbleTimer: 0,
+        levelFreezeTimer: 0,
+        particles: [],
+        floatingHearts: [],
+        lastTs: 0
+      };
+
+      function getSpeedMult(lvl) {
+        return 1 + (lvl - 1) * 0.19;
+      }
+
+      function getDoorWidth(lvl) {
+        if (lvl < 3) return 1.04;
+        return Math.max(0.58, 1.04 - (lvl - 2) * 0.055);
+      }
+
+      function updateHUD() {
+        if (elLevel) elLevel.textContent = String(state.level);
+        if (elScore) elScore.textContent = String(state.score);
+        if (elHealth) {
+          const hearts = ["🖤🖤🖤", "❤️🖤🖤", "❤️❤️🖤", "❤️❤️❤️"];
+          elHealth.textContent = hearts[Math.max(0, Math.min(3, state.health))];
+        }
+        if (elSpeed) elSpeed.textContent = `${getSpeedMult(state.level).toFixed(1)}x`;
+        if (elBest) elBest.textContent = String(bestLevel);
+        if (pauseBtn) pauseBtn.textContent = state.mode === "paused" ? "▶ Resume" : "⏸ Pause";
+      }
+
+      function spawnConfetti(x, y, count = 32) {
+        const colors = ["#F0A830", "#FFFBF2", "#2D6CDF", "#58896B", "#E88B72"];
+        for (let i = 0; i < count; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const sp = 75 + Math.random() * 190;
+          state.particles.push({
+            x, y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp - 30,
+            size: 4 + Math.random() * 5,
+            color: colors[i % colors.length],
+            life: 0.75 + Math.random() * 0.45,
+            maxLife: 1.2
+          });
+        }
+      }
+
+      function centerCleo() {
+        state.cleoX = cx;
+        state.cleoY = cy;
+      }
+
+      function resizeCanvas() {
+        if (!canvas.parentElement) return;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        if (rect.width < 40) return;
+        const prevSize = size;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        size = Math.floor(rect.width);
+        canvas.width = Math.floor(size * dpr);
+        canvas.height = Math.floor(size * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const ratio = size / (prevSize || size);
+        cx = size / 2;
+        cy = size / 2;
+        ringR = size * 0.355;
+
+        if (state.mode === "idle" || state.mode === "gameover") {
+          centerCleo();
+        } else {
+          state.cleoX *= ratio;
+          state.cleoY *= ratio;
+        }
+        draw(performance.now());
+      }
+
+      function startGame() {
+        state.level = 1;
+        state.score = 0;
+        state.health = 3;
+        state.doorAngle = -Math.PI / 2 + 0.7;
+        state.ringDir = 1;
+        state.doorArc = getDoorWidth(1);
+        state.invulnTimer = 0.3;
+        state.wobbleTimer = 0;
+        state.levelFreezeTimer = 0;
+        state.particles = [];
+        state.floatingHearts = [];
+        centerCleo();
+        state.mode = "playing";
+        overlay.classList.add("hidden");
+        if (elLevelupPopup) elLevelupPopup.classList.add("hidden");
+        elMsg.textContent = 'Cleo: "Watch the glowing Golden Door and guide me safely through!"';
+        updateHUD();
+        startLoop();
+      }
+
+      function togglePause() {
+        if (state.mode === "playing") {
+          state.mode = "paused";
+          ovBadge.className = "px-3.5 py-1 rounded-full bg-gold text-ink border-2 border-ink font-display text-xs font-bold";
+          ovBadge.textContent = "☕ Istirahat Sejenak";
+          ovTitle.textContent = "Game Dipause";
+          ovDesc.innerHTML = `<p>Tarik napas dan rileks. Klik tombol di bawah jika sudah siap lanjut.</p>`;
+          startBtn.textContent = "▶ Lanjut Main";
+          overlay.classList.remove("hidden");
+          updateHUD();
+        } else if (state.mode === "paused") {
+          state.mode = "playing";
+          overlay.classList.add("hidden");
+          state.lastTs = 0;
+          updateHUD();
+          startLoop();
+        }
+      }
+
+      function angleDelta(a, b) {
+        let d = (a - b) % (Math.PI * 2);
+        if (d > Math.PI) d -= Math.PI * 2;
+        if (d < -Math.PI) d += Math.PI * 2;
+        return Math.abs(d);
+      }
+
+      function onLevelCleared(exitX, exitY) {
+        SoundFX.playEscapeChime();
+        spawnConfetti(exitX, exitY, 36);
+
+        // Score progression: Level 1 -> +50, Level 2 -> +100, Level 3 -> +150...
+        const addedPoints = state.level * 50;
+        state.score += addedPoints;
+        if (state.score > bestScore) {
+          bestScore = state.score;
+          try { localStorage.setItem(BEST_SCORE_KEY, String(bestScore)); } catch (e) {}
+        }
+
+        const nextLvl = state.level + 1;
+
+        // Level-Up Floating Pop-up
+        if (elLevelupPopup) {
+          if (elLevelupTitle) elLevelupTitle.textContent = `LEVEL ${nextLvl}!`;
+          if (elLevelupSub) elLevelupSub.textContent = `+${addedPoints} Poin! ⭐`;
+          elLevelupPopup.classList.remove("hidden");
+          clearTimeout(levelupTimer);
+          levelupTimer = setTimeout(() => {
+            elLevelupPopup.classList.add("hidden");
+          }, 1500);
+        }
+
+        state.level++;
+        if (state.level > bestLevel) {
+          bestLevel = state.level;
+          try { localStorage.setItem(BEST_KEY, String(bestLevel)); } catch (e) {}
+        }
+        state.doorArc = getDoorWidth(state.level);
+        if (state.level >= 4 && state.level % 2 === 0) {
+          state.ringDir *= -1;
+        }
+        state.doorAngle = Math.random() * Math.PI * 2;
+        centerCleo();
+        state.invulnTimer = 0.65;
+        state.levelFreezeTimer = 0.25;
+        pointerActive = false;
+        elMsg.textContent = levelCheers[(state.level - 2) % levelCheers.length];
+        updateHUD();
+      }
+
+      function onGameOver() {
+        state.mode = "gameover";
+        stopLoop();
+        pointerActive = false;
+        keys.up = keys.down = keys.left = keys.right = false;
+
+        if (elLevelupPopup) elLevelupPopup.classList.add("hidden");
+
+        ovBadge.className = "px-3.5 py-1 rounded-full bg-[#E25C5C] text-white border-2 border-ink font-display text-xs font-bold";
+        ovBadge.textContent = "💔 KAMU KALAH!";
+        ovTitle.textContent = "Waktu Cleo Beristirahat ☕";
+        
+        const lastSpeed = getSpeedMult(state.level).toFixed(1);
+        ovDesc.innerHTML = `
+          <div class="comic-card-sm bg-card text-ink p-3.5 sm:p-4 space-y-2 border-2 border-ink text-left max-w-xs mx-auto my-1 shadow-[3px_3px_0_#2B2320]">
+            <div class="flex justify-between items-center text-sm font-semibold border-b border-ink/15 pb-1">
+              <span>🏆 Best Level:</span>
+              <span class="font-bold text-cleo text-base">${bestLevel}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm font-semibold border-b border-ink/15 pb-1">
+              <span>⭐ Total Poin:</span>
+              <span class="font-bold text-amberWarm text-base">${state.score}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm font-semibold">
+              <span>⚡ Speed Terakhir:</span>
+              <span class="font-bold text-sage text-base">${lastSpeed}x</span>
+            </div>
+          </div>
+          <p class="text-xs text-paper/85 pt-1 leading-relaxed">Tarik napas dalam-dalam. Tekan tombol di bawah untuk mencoba lagi!</p>
+        `;
+        startBtn.textContent = "🔄 Main Lagi";
+        overlay.classList.remove("hidden");
+        elMsg.textContent = `Cleo kehabisan nyawa! Skor kamu: ${state.score} poin. Yuk coba lagi!`;
+        updateHUD();
+      }
+
+      function update(dt) {
+        for (let i = state.particles.length - 1; i >= 0; i--) {
+          const p = state.particles[i];
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.vy += 210 * dt;
+          p.life -= dt;
+          if (p.life <= 0) state.particles.splice(i, 1);
+        }
+
+        for (let i = state.floatingHearts.length - 1; i >= 0; i--) {
+          const h = state.floatingHearts[i];
+          h.y += h.vy * dt;
+          h.life -= dt;
+          if (h.life <= 0) state.floatingHearts.splice(i, 1);
+        }
+
+        if (state.mode !== "playing") return;
+
+        if (state.invulnTimer > 0) state.invulnTimer = Math.max(0, state.invulnTimer - dt);
+        if (state.wobbleTimer > 0) state.wobbleTimer = Math.max(0, state.wobbleTimer - dt);
+
+        // Rotate circle continuously at level-scaled speed
+        const rotSpeed = state.baseRotSpeed * getSpeedMult(state.level);
+        state.doorAngle += rotSpeed * state.ringDir * dt;
+
+        if (state.levelFreezeTimer > 0) {
+          state.levelFreezeTimer = Math.max(0, state.levelFreezeTimer - dt);
+          return;
+        }
+
+        // Steering vector
+        let vx = 0, vy = 0;
+        if (keys.left) vx -= 1;
+        if (keys.right) vx += 1;
+        if (keys.up) vy -= 1;
+        if (keys.down) vy += 1;
+
+        // Cleo movement speed (increased for snappier control)
+        const moveSpeed = size * 0.90;
+
+        if (vx !== 0 || vy !== 0) {
+          const len = Math.hypot(vx, vy);
+          state.cleoX += (vx / len) * moveSpeed * dt;
+          state.cleoY += (vy / len) * moveSpeed * dt;
+        } else if (pointerActive) {
+          const dx = pointerX - state.cleoX;
+          const dy = pointerY - state.cleoY;
+          const distP = Math.hypot(dx, dy);
+          if (distP > 4) {
+            const step = Math.min(distP, moveSpeed * 1.35 * dt);
+            state.cleoX += (dx / distP) * step;
+            state.cleoY += (dy / distP) * step;
+          }
+        }
+
+        const cleoR = size * 0.056;
+        state.cleoX = Math.max(cleoR, Math.min(size - cleoR, state.cleoX));
+        state.cleoY = Math.max(cleoR, Math.min(size - cleoR, state.cleoY));
+
+        // Distance from center & Golden Door detection
+        const dx = state.cleoX - cx;
+        const dy = state.cleoY - cy;
+        const dist = Math.hypot(dx, dy);
+        const wallHalf = 7;
+
+        if (dist >= ringR + cleoR * 0.85) {
+          onLevelCleared(state.cleoX, state.cleoY);
+          return;
+        }
+
+        if (dist + cleoR >= ringR - wallHalf && dist - cleoR <= ringR + wallHalf) {
+          const theta = Math.atan2(dy, dx);
+          const diff = angleDelta(theta, state.doorAngle);
+          const safeHalfDoor = (state.doorArc / 2) - (cleoR / ringR) * 0.42;
+
+          if (diff > safeHalfDoor && state.invulnTimer <= 0) {
+            // Cleo touches the wall: reduce 1 health
+            SoundFX.playGentleBump();
+            state.health--;
+            state.wobbleTimer = 0.75;
+            state.invulnTimer = 1.05; // Invulnerable frame buffer
+
+            // Spawn floating broken heart pop effect
+            state.floatingHearts.push({
+              x: state.cleoX,
+              y: state.cleoY - 18,
+              vy: -65,
+              life: 1.3,
+              maxLife: 1.3,
+              text: "💔",
+              sub: "-1 NYAWA"
+            });
+
+            pointerActive = false;
+            centerCleo();
+            updateHUD();
+
+            if (state.health <= 0) {
+              onGameOver();
+            } else {
+              elMsg.textContent = `Cleo tersenggol! Sisa nyawa: ${state.health} ❤️ (Tarik napas dan coba lagi!)`;
+            }
+          }
+        }
+      }
+
+      function drawCleo(x, y, r, wobble, invuln) {
+        ctx.save();
+        ctx.translate(x, y);
+
+        // Blinking flash effect when recovering from damage
+        if (invuln > 0 && Math.floor(performance.now() * 0.016) % 2 === 0) {
+          ctx.globalAlpha = 0.45;
+        }
+
+        if (wobble > 0) ctx.rotate(Math.sin(wobble * 36) * 0.24);
+
+        // Outline merah menyala saat kena garis
+        const isHit = wobble > 0 || invuln > 0.45;
+        const mainStroke = isHit ? "#FF1E40" : "#2B2320";
+        const mainWidth = isHit ? 4.5 : 2.4;
+
+        // Glowing red shock aura when taking damage
+        if (isHit) {
+          ctx.save();
+          ctx.strokeStyle = "rgba(255, 30, 64, 0.95)";
+          ctx.shadowColor = "#FF0033";
+          ctx.shadowBlur = 24;
+          ctx.lineWidth = 5.5;
+          ctx.beginPath();
+          ctx.arc(0, 0, r * 1.20, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Second pulsing red shock ring
+          ctx.strokeStyle = "rgba(255, 80, 80, 0.65)";
+          ctx.lineWidth = 2.8;
+          ctx.beginPath();
+          ctx.arc(0, 0, r * 1.38, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Blue Hoodie Body
+        ctx.fillStyle = "#2D6CDF";
+        ctx.strokeStyle = mainStroke;
+        ctx.lineWidth = mainWidth;
+        ctx.beginPath();
+        ctx.arc(0, r * 0.2, r * 0.86, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Floppy Brown Ears
+        ctx.fillStyle = "#6E3618";
+        ctx.strokeStyle = mainStroke;
+        ctx.lineWidth = mainWidth;
+        ctx.beginPath();
+        ctx.ellipse(-r * 0.74, r * 0.08, r * 0.28, r * 0.56, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(r * 0.74, r * 0.08, r * 0.28, r * 0.56, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Puppy Head
+        ctx.fillStyle = "#A65C32";
+        ctx.strokeStyle = mainStroke;
+        ctx.lineWidth = mainWidth;
+        ctx.beginPath();
+        ctx.arc(0, -r * 0.08, r * 0.68, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Cream Muzzle
+        ctx.fillStyle = "#FFFBF2";
+        ctx.beginPath();
+        ctx.ellipse(0, r * 0.14, r * 0.44, r * 0.30, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Expressive Eyes
+        ctx.fillStyle = isHit ? "#FF1E40" : "#2B2320";
+        if (wobble > 0) {
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = "#FF1E40";
+          ctx.beginPath();
+          ctx.moveTo(-r * 0.32, -r * 0.14); ctx.lineTo(-r * 0.18, -r * 0.06); ctx.lineTo(-r * 0.32, r * 0.02);
+          ctx.moveTo(r * 0.32, -r * 0.14); ctx.lineTo(r * 0.18, -r * 0.06); ctx.lineTo(r * 0.32, r * 0.02);
+          ctx.stroke();
+        } else {
+          ctx.beginPath();
+          ctx.arc(-r * 0.24, -r * 0.1, r * 0.11, 0, Math.PI * 2);
+          ctx.arc(r * 0.24, -r * 0.1, r * 0.11, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#FFF";
+          ctx.beginPath();
+          ctx.arc(-r * 0.27, -r * 0.13, r * 0.04, 0, Math.PI * 2);
+          ctx.arc(r * 0.21, -r * 0.13, r * 0.04, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Nose
+        ctx.fillStyle = "#2B2320";
+        ctx.beginPath();
+        ctx.ellipse(0, r * 0.08, r * 0.13, r * 0.09, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function draw(now) {
+        const t = now * 0.001;
+        ctx.clearRect(0, 0, size, size);
+
+        const grad = ctx.createRadialGradient(cx, cy, ringR * 0.12, cx, cy, size * 0.72);
+        grad.addColorStop(0, "#243459");
+        grad.addColorStop(1, "#131A2D");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, size, size);
+
+        // Twinkling Stars
+        skyStars.forEach((st) => {
+          const alpha = 0.22 + 0.68 * (0.5 + 0.5 * Math.sin(t * 2.6 + st.phase));
+          ctx.fillStyle = `rgba(255, 251, 242, ${alpha.toFixed(2)})`;
+          ctx.beginPath();
+          ctx.arc(st.rx * size, st.ry * size, st.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        const doorStart = state.doorAngle - state.doorArc / 2;
+        const doorEnd = state.doorAngle + state.doorArc / 2;
+
+        // 1. Dark Tangled "Overthinking" Circle Wall
+        ctx.save();
+        ctx.strokeStyle = "rgba(142, 44, 62, 0.38)";
+        ctx.lineWidth = 22;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringR, doorEnd, doorStart + Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#8C9CC4";
+        ctx.lineWidth = 11;
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringR, doorEnd, doorStart + Math.PI * 2);
+        ctx.stroke();
+
+        // Tangled Scribble Thread
+        ctx.strokeStyle = "#FFFBF2";
+        ctx.lineWidth = 2;
+        ctx.globalAlpha = 0.65;
+        ctx.beginPath();
+        const wallSpan = Math.PI * 2 - state.doorArc;
+        const steps = 46;
+        for (let i = 0; i <= steps; i++) {
+          const f = i / steps;
+          const ang = doorEnd + f * wallSpan;
+          const wave = Math.sin(f * Math.PI * 16 + t * 2.4) * 5;
+          const px = cx + Math.cos(ang) * (ringR + wave);
+          const py = cy + Math.sin(ang) * (ringR + wave);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+        ctx.restore();
+
+        // 2. Glowing Golden Door Exit
+        ctx.save();
+        ctx.strokeStyle = "rgba(240, 168, 48, 0.42)";
+        ctx.lineWidth = 24;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringR, doorStart, doorEnd);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#FFE594";
+        ctx.lineWidth = 4;
+        ctx.setLineDash([6, 7]);
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringR, doorStart, doorEnd);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        [doorStart, doorEnd].forEach((ang) => {
+          const lx = cx + Math.cos(ang) * ringR;
+          const ly = cy + Math.sin(ang) * ringR;
+          ctx.fillStyle = "#F0A830";
+          ctx.strokeStyle = "#2B2320";
+          ctx.lineWidth = 2.4;
+          ctx.beginPath();
+          ctx.arc(lx, ly, 7.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        });
+
+        const bx = cx + Math.cos(state.doorAngle) * (ringR + 24);
+        const by = cy + Math.sin(state.doorAngle) * (ringR + 24);
+        ctx.fillStyle = "#F0A830";
+        ctx.font = "bold 11px Fredoka, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("DOOR", bx, by);
+        ctx.restore();
+
+        // Cleo Sprite
+        drawCleo(state.cleoX, state.cleoY, size * 0.056, state.wobbleTimer, state.invulnTimer);
+
+        // Celebration Star Confetti
+        state.particles.forEach((p) => {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 0.55, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        // Floating Broken Hearts Pop Effect (When Hit)
+        state.floatingHearts.forEach((h) => {
+          ctx.save();
+          const progress = 1 - (h.life / h.maxLife);
+          const alpha = Math.max(0, h.life / h.maxLife);
+          ctx.globalAlpha = alpha;
+          const scale = 1 + Math.sin(progress * Math.PI) * 0.65;
+          ctx.translate(h.x, h.y);
+          ctx.scale(scale, scale);
+
+          // Draw 💔 emoji
+          ctx.font = "bold 34px 'Segoe UI Emoji', sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(h.text, 0, -8);
+
+          // Subtext "-1 NYAWA" with comic outline
+          ctx.font = "bold 13px Fredoka, sans-serif";
+          ctx.strokeStyle = "#2B2320";
+          ctx.lineWidth = 3.5;
+          ctx.strokeText(h.sub, 0, 16);
+          ctx.fillStyle = "#FF1E40";
+          ctx.fillText(h.sub, 0, 16);
+
+          ctx.restore();
+        });
+      }
+
+      function loop(ts) {
+        if (currentRoute !== "game") {
+          stopLoop();
+          return;
+        }
+        if (!state.lastTs) state.lastTs = ts;
+        const dt = Math.min(0.05, (ts - state.lastTs) / 1000);
+        state.lastTs = ts;
+
+        update(dt);
+        draw(ts);
+        rafId = requestAnimationFrame(loop);
+      }
+
+      function startLoop() {
+        if (rafId !== null) return;
+        state.lastTs = 0;
+        rafId = requestAnimationFrame(loop);
+      }
+
+      function stopLoop() {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      }
+
+      // Keyboard Controls
+      function setKey(code, pressed) {
+        if (code === "ArrowUp" || code === "KeyW") keys.up = pressed;
+        if (code === "ArrowDown" || code === "KeyS") keys.down = pressed;
+        if (code === "ArrowLeft" || code === "KeyA") keys.left = pressed;
+        if (code === "ArrowRight" || code === "KeyD") keys.right = pressed;
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (currentRoute !== "game") return;
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "KeyW", "KeyA", "KeyS", "KeyD"].includes(e.code)) {
+          if (state.mode === "playing") e.preventDefault();
+          setKey(e.code, true);
+        }
+      });
+
+      window.addEventListener("keyup", (e) => setKey(e.code, false));
+
+      // Mouse / Touch Drag Guidance
+      function updatePointer(e) {
+        const rect = canvas.getBoundingClientRect();
+        pointerX = (e.clientX - rect.left) * (size / rect.width);
+        pointerY = (e.clientY - rect.top) * (size / rect.height);
+      }
+
+      canvas.addEventListener("pointerdown", (e) => {
+        if (state.mode !== "playing") return;
+        pointerActive = true;
+        updatePointer(e);
+        canvas.setPointerCapture?.(e.pointerId);
+      });
+
+      canvas.addEventListener("pointermove", (e) => {
+        if (!pointerActive) return;
+        updatePointer(e);
+      });
+
+      const endPointer = () => { pointerActive = false; };
+      canvas.addEventListener("pointerup", endPointer);
+      canvas.addEventListener("pointercancel", endPointer);
+
+      // On-Screen Mobile D-Pad
+      document.querySelectorAll(".dpad-btn").forEach((btn) => {
+        const dir = btn.getAttribute("data-dir");
+        const onDown = (e) => { e.preventDefault(); keys[dir] = true; };
+        const onUp = () => { keys[dir] = false; };
+        btn.addEventListener("pointerdown", onDown);
+        btn.addEventListener("pointerup", onUp);
+        btn.addEventListener("pointerleave", onUp);
+        btn.addEventListener("pointercancel", onUp);
+      });
+
+      // Controls
+      startBtn.addEventListener("click", () => {
+        if (state.mode === "paused") togglePause();
+        else startGame();
+      });
+
+      pauseBtn.addEventListener("click", () => {
+        if (state.mode === "playing" || state.mode === "paused") togglePause();
+      });
+
+      restartBtn.addEventListener("click", startGame);
+
+      soundBtn.addEventListener("click", () => {
+        syncAllSoundButtons(SoundFX.toggle());
+      });
+
+      window.addEventListener("resize", () => {
+        if (currentRoute === "game") resizeCanvas();
+      });
+
+      updateHUD();
+
+      return {
+        onShow: () => {
+          resizeCanvas();
+          startLoop();
+        },
+        onHide: () => {
+          if (state.mode === "playing") togglePause();
+          keys.up = keys.down = keys.left = keys.right = false;
+          pointerActive = false;
+          stopLoop();
+        }
+      };
+    }
+
+    /* =========================================================================
+       11. PAGE 6: LIVE CAFÉ NOTE SUBMISSION (DIRECT GOOGLE FORM & EMAIL)
+       ========================================================================= */
+    function initFeedbackPage() {
+      const form = document.getElementById("demo-feedback-form");
+      const thanks = document.getElementById("demo-feedback-thanks");
+      const resetBtn = document.getElementById("demo-feedback-reset");
+      const submitBtn = document.getElementById("feedback-submit-btn") || form?.querySelector('button[type="submit"]');
+
+      form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // 1. Gather all inputs from the form
+        const q1 = document.getElementById("q1")?.value || "Cleo (overthinking & hiding in the hoodie)";
+        const q2 = document.getElementById("q2")?.value.trim() || "";
+        const q3Boxes = Array.from(form.querySelectorAll('input[name="q3_enjoyed"]:checked')).map(cb => cb.value);
+        const q4 = document.getElementById("q4")?.value || "FEELAUTHIA Journaling Book";
+        const q5 = document.getElementById("q5")?.value.trim() || "";
+        const q6 = document.getElementById("q6")?.value.trim() || "";
+        const q7 = document.getElementById("q7")?.value.trim() || "";
+
+        // 2. Loading state on submit button
+        const originalBtnHTML = submitBtn ? submitBtn.innerHTML : "✉️ Send Café Note";
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span>⏳</span> <span>Sending to Café...</span>`;
+        }
+
+        // 3. Save locally in browser localStorage as immediate safeguard
+        try {
+          const storedNotes = JSON.parse(localStorage.getItem("feelauthia_cafe_notes") || "[]");
+          storedNotes.push({
+            q1, q2, q3: q3Boxes, q4, q5, q6, q7,
+            time: new Date().toISOString()
+          });
+          localStorage.setItem("feelauthia_cafe_notes", JSON.stringify(storedNotes));
+        } catch (storageErr) {
+          console.warn("Storage warning:", storageErr);
+        }
+
+        // 4. SUBMIT TO GOOGLE FORM (Zero-CORS, Works everywhere including file:/// and hostinger)
+        try {
+          const gfUrl = SITE_CONFIG.googleFormActionUrl;
+          if (gfUrl) {
+            let hiddenForm = document.getElementById("gf-internal-hidden-form");
+            if (!hiddenForm) {
+              hiddenForm = document.createElement("form");
+              hiddenForm.id = "gf-internal-hidden-form";
+              hiddenForm.method = "POST";
+              hiddenForm.target = "gform_hidden_iframe";
+              hiddenForm.action = gfUrl;
+              hiddenForm.style.display = "none";
+              document.body.appendChild(hiddenForm);
+            }
+            hiddenForm.innerHTML = "";
+
+            // Mapping to exact Google Form entry IDs
+            const entries = {
+              "entry.546726150": q1,
+              "entry.1651953733": q2,
+              "entry.1031323330": q4,
+              "entry.962178383": q5 || "(Sensory idea)",
+              "entry.2005174637": q6 || "(Story feeling)",
+              "entry.609096638": q7 || ""
+            };
+
+            for (const [name, val] of Object.entries(entries)) {
+              const inp = document.createElement("input");
+              inp.type = "hidden";
+              inp.name = name;
+              inp.value = val;
+              hiddenForm.appendChild(inp);
+            }
+
+            // Checkboxes (multiple values for entry.710428778)
+            const chosenBoxes = q3Boxes.length > 0 ? q3Boxes : ["Visual Novel Story"];
+            chosenBoxes.forEach((choice) => {
+              const cbInp = document.createElement("input");
+              cbInp.type = "hidden";
+              cbInp.name = "entry.710428778";
+              cbInp.value = choice;
+              hiddenForm.appendChild(cbInp);
+            });
+
+            hiddenForm.submit();
+          }
+        } catch (gfErr) {
+          console.warn("Google Form hidden submit notice:", gfErr);
+        }
+
+        // 5. Transition to celebration view
+        setTimeout(() => {
+          form.classList.add("hidden");
+          thanks?.classList.remove("hidden");
+          showToast("Catatan terkirim ke Google Form & Luna! ☕💌", "💌");
+
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHTML;
+          }
+        }, 400);
+      });
+
+      resetBtn?.addEventListener("click", () => {
+        form?.reset();
+        thanks?.classList.add("hidden");
+        form?.classList.remove("hidden");
+      });
+    }
+
+    /* =========================================================================
+       12. BOOT APPLICATION ON WINDOW LOAD
+       ========================================================================= */
+    window.addEventListener("load", () => {
+      applySiteConfig();
+      initSkyAndParallax();
+      initNavModalsAndBreathing();
+      initDailyQuotes();
+      initProductsPage();
+      gameController = initEscapeCircleGame();
+      initFeedbackPage();
+      initRouter();
+    });
+  </script>
+</body>
+</html>
