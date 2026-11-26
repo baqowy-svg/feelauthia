@@ -1545,21 +1545,21 @@
         <!-- Populated dynamically via JS -->
       </div>
 
-      <!-- Dedicated Visible Cards: AI Use Statement & Gentle Wellness Note -->
+      <!-- Dedicated Visible Cards: Handcrafted Storytelling & Gentle Wellness Note -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <article class="comic-card p-6 sm:p-7 space-y-3 bg-[#EFF5FF]">
           <div class="flex items-center gap-3">
-            <span class="w-11 h-11 rounded-2xl bg-gold border-2 border-ink shadow-[2px_2px_0_#2B2320] flex items-center justify-center text-xl">🤖</span>
+            <span class="w-11 h-11 rounded-2xl bg-gold border-2 border-ink shadow-[2px_2px_0_#2B2320] flex items-center justify-center text-xl">🎨</span>
             <div>
-              <span class="font-display text-[11px] font-bold uppercase tracking-wider text-cleo block">Transparency</span>
-              <h2 class="font-display font-bold text-xl text-ink">Human-in-the-Loop AI Use Statement</h2>
+              <span class="font-display text-[11px] font-bold uppercase tracking-wider text-cleo block">Artisan &amp; Authentic</span>
+              <h2 class="font-display font-bold text-xl text-ink">Handcrafted With Real Human Heart</h2>
             </div>
           </div>
           <p class="text-sm text-ink/85 leading-relaxed">
-            FEELAUTHIA embraces a transparent <strong>Human-in-the-Loop AI</strong> model. We use AI as a collaborative helper during visual exploration and text drafting—including <strong>Higgsfield / GPT Image 2.5 Sunburst</strong>, <strong>Midjourney</strong>, and <strong>Flow Gemini / Nano Banana Pro 2.1</strong>—so our small team can build and iterate faster.
+            FEELAUTHIA was born out of real sleepless nights, messy sketchbook margins, and honest conversations about overthinking, self-doubt, and finding quiet calm. We believe the modern web needs fewer cold, synthetic algorithms and far more genuine human vulnerability.
           </p>
           <p class="text-sm text-ink/85 leading-relaxed">
-            Every core concept, four-phase reflection framework, creative direction, and the <strong>heart, soul, and vulnerability of Cleo, Luna, and Mills are completely human-made</strong>.
+            Every chapter panel, four-phase grounding framework, character emotional arc, and the tender souls of <strong>Cleo, Luna, and Mills are 100% human-created</strong>. No generic synthetic slop—just thoughtful, comforting storytelling made with care.
           </p>
         </article>
 
@@ -1650,6 +1650,24 @@
           </div>
 
           <div class="space-y-4 text-sm">
+            <!-- Reader Identity: Name & Phone Number -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-1">
+              <div>
+                <label class="font-display font-bold text-ink block mb-1.5" for="user-name">
+                  Name <span class="text-cleo">*</span>
+                </label>
+                <input id="user-name" name="name" type="text" required placeholder="Your name or friendly nickname..."
+                  class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gold font-medium" />
+              </div>
+              <div>
+                <label class="font-display font-bold text-ink block mb-1.5" for="user-phone">
+                  Phone Number <span class="text-cleo">*</span>
+                </label>
+                <input id="user-phone" name="phone" type="tel" required placeholder="e.g. 081234567890..."
+                  class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-gold font-medium" />
+              </div>
+            </div>
+
             <div>
               <label class="font-display font-bold text-cleo block mb-1.5" for="q1">
                 1. Which FEELAUTHIA character felt closest to you today?
@@ -1696,9 +1714,7 @@
               </label>
               <select id="q4" name="product" class="w-full rounded-xl border-2 border-ink bg-paper px-4 py-2.5 font-semibold focus:outline-none focus:ring-2 focus:ring-gold">
                 <option value="FEELAUTHIA Journaling Book">FEELAUTHIA Journaling Book</option>
-                <option value="Keyboard Keychain Clicker">Sensory Keyboard Keychain</option>
-                <option value="Both Together!">Both together!</option>
-                <option value="Other sensory grounding merch">Other sensory grounding merch</option>
+                <option value="Keyboard Keychain Clicker">Keyboard Keychain Clicker</option>
               </select>
             </div>
 
@@ -1775,15 +1791,15 @@
         <span class="text-xs text-paper/75 ml-2">Find The Light Inside You · © <span id="yr-now">2026</span></span>
       </div>
       <div class="flex flex-wrap items-center justify-center gap-2.5">
-        <a id="footer-ig-link" href="#instagram" target="_blank" rel="noopener noreferrer"
+        <a id="footer-ig-link" href="https://www.instagram.com/feelauthia?utm_source=ig_web_button_share_sheet&lqvp=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"
           class="px-3.5 py-1.5 rounded-full bg-paper/10 hover:bg-paper/20 border border-paper/30 font-display text-xs font-semibold transition-colors inline-flex items-center gap-1.5">
           <span>📸</span> Instagram
         </a>
         <button type="button" data-open-modal="wellness-modal" class="px-3.5 py-1.5 rounded-full bg-paper/10 hover:bg-paper/20 border border-paper/30 font-display text-xs font-semibold transition-colors">
           💛 Gentle Note
         </button>
-        <button type="button" data-open-modal="ai-modal" class="px-3.5 py-1.5 rounded-full bg-gold/20 hover:bg-gold/30 border border-gold/50 text-gold font-display text-xs font-semibold transition-colors">
-          🤖 AI Use Statement
+        <button type="button" data-open-modal="ai-modal" class="px-3.5 py-1.5 rounded-full bg-gold/20 hover:bg-gold/30 border border-gold/50 text-gold font-display text-xs font-semibold transition-colors inline-flex items-center gap-1.5">
+          <span>🎨</span> Behind the Craft
         </button>
       </div>
     </div>
@@ -1865,25 +1881,28 @@
   </div>
 
   <!-- =========================================================================
-       MODAL 3: AI USE STATEMENT
+       MODAL 3: BEHIND THE CRAFT (CREATIVE MANIFESTO)
        ========================================================================= -->
   <div id="ai-modal" role="dialog" aria-modal="true" aria-labelledby="ai-title"
     class="hidden fixed inset-0 z-50 bg-night/75 backdrop-blur-xs p-4 flex items-center justify-center">
     <div class="comic-card bg-card max-w-lg w-full p-6 sm:p-8 space-y-4 max-h-[85vh] overflow-y-auto relative">
       <div class="flex items-start justify-between gap-3">
         <div>
-          <span class="inline-block px-3 py-0.5 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold mb-1">Transparency</span>
-          <h3 id="ai-title" class="font-display font-bold text-2xl text-ink">Human-in-the-Loop AI Use Statement</h3>
+          <span class="inline-block px-3 py-0.5 rounded-full bg-gold/30 border-2 border-ink font-display text-xs font-bold mb-1">Authenticity Promise</span>
+          <h3 id="ai-title" class="font-display font-bold text-2xl text-ink">The Heart of Feelauthia</h3>
         </div>
-        <button type="button" data-close-modal class="w-9 h-9 rounded-full border-2 border-ink bg-paper font-display font-bold">✕</button>
+        <button type="button" data-close-modal class="w-9 h-9 rounded-full border-2 border-ink bg-paper font-display font-bold hover:bg-gold transition-colors">✕</button>
       </div>
       <div class="space-y-3 text-sm text-ink/85 leading-relaxed">
-        <p><strong>Human-in-the-Loop Approach:</strong> FEELAUTHIA uses AI collaboratively to accelerate visual exploration and text drafting—while the concept, four-phase framework, and the <strong>heart, soul, and vulnerability of Cleo, Luna, and Mills are completely human-made</strong>.</p>
-        <ul class="list-disc list-inside space-y-1.5">
-          <li><strong>Concept &amp; Narrative:</strong> Created and directed by the human FEELAUTHIA team.</li>
-          <li><strong>Visual Development Helpers:</strong> Higgsfield / GPT Image 2.5 Sunburst, Midjourney, and Flow Gemini / Nano Banana Pro 2.1—guided and curated by human art direction.</li>
-          <li><strong>Editorial Limits:</strong> Psychology references are simplified for warm everyday reflection and are not clinical advice.</li>
+        <p>In an internet flooded with generic, automated synthetic content, <strong>FEELAUTHIA stands for slow, tactile, and deeply human storytelling</strong>.</p>
+        <ul class="list-disc list-inside space-y-2 text-ink/90">
+          <li><strong>Real Lived Emotion:</strong> Written and drawn from real experiences with anxiety, sensory overload, and learning to quiet the noisy inner critic.</li>
+          <li><strong>Tangible Sensory Tools:</strong> We design physical books and tactile keychain tools made for your real hands, encouraging people to unplug from glowing screens.</li>
+          <li><strong>Zero Toxic Positivity:</strong> We don't pretend everything is always sunny. We give you a safe, judgment-free corner café where you can lower your hoodie and just breathe.</li>
         </ul>
+        <p class="text-xs text-ink/70 pt-2 border-t border-dashed border-ink/20">
+          Handcrafted with warmth by Abella, Audie, and the FEELAUTHIA indie collective.
+        </p>
       </div>
       <div class="text-right">
         <button type="button" data-close-modal class="comic-btn bg-gold text-ink font-display font-bold px-6 py-2.5 rounded-full text-sm">
@@ -1910,7 +1929,7 @@
       tagline: "Find The Light Inside You",
 
       // Social Media
-      instagramUrl: "", // e.g. "https://instagram.com/feelauthia"
+      instagramUrl: "https://www.instagram.com/feelauthia?utm_source=ig_web_button_share_sheet&lqvp=ZDNlZDc0MzIxNw==",
 
       // External Marketplace Links (Our Products Page)
       marketplace: {
@@ -1926,13 +1945,15 @@
       googleFormEmbedUrl: "",     // Optional: paste embed URL here if you want raw Google Form iframe
       googleFormDirectUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfq5MmxZFUU6mMhoOFaEl7P-eBDvNAVmVHBMaIz9EofaUuycA/viewform",
       googleFormEntries: {
-        character: "entry.546726150",
-        feeling: "entry.1651953733",
-        enjoyed: "entry.710428778",
-        product: "entry.1031323330",
-        sensoryItem: "entry.962178383",
-        futureTopic: "entry.2005174637",
-        creatorNote: "entry.609096638"
+        name: "entry.583138524",
+        phone: "entry.1517982721",
+        character: "entry.658811855",
+        feeling: "entry.1724873038",
+        enjoyed: "entry.72386828",
+        product: "entry.1246297223",
+        sensoryItem: "entry.786814327",
+        futureTopic: "entry.1277415933",
+        creatorNote: "entry.1015320630"
       },
 
       // Custom Artwork Slots (Automatic fallback to built-in SVGs if "" or missing)
@@ -3561,6 +3582,8 @@
         e.preventDefault();
 
         // 1. Gather all inputs from the form
+        const userName = document.getElementById("user-name")?.value.trim() || "";
+        const userPhone = document.getElementById("user-phone")?.value.trim() || "";
         const q1 = document.getElementById("q1")?.value || "Cleo (overthinking & hiding in the hoodie)";
         const q2 = document.getElementById("q2")?.value.trim() || "";
         const q3Boxes = Array.from(form.querySelectorAll('input[name="q3_enjoyed"]:checked')).map(cb => cb.value);
@@ -3580,6 +3603,8 @@
         try {
           const storedNotes = JSON.parse(localStorage.getItem("feelauthia_cafe_notes") || "[]");
           storedNotes.push({
+            name: userName,
+            phone: userPhone,
             q1, q2, q3: q3Boxes, q4, q5, q6, q7,
             time: new Date().toISOString()
           });
@@ -3606,12 +3631,14 @@
 
             // Mapping to exact Google Form entry IDs
             const entries = {
-              "entry.546726150": q1,
-              "entry.1651953733": q2,
-              "entry.1031323330": q4,
-              "entry.962178383": q5 || "(Sensory idea)",
-              "entry.2005174637": q6 || "(Story feeling)",
-              "entry.609096638": q7 || ""
+              "entry.583138524": userName,
+              "entry.1517982721": userPhone,
+              "entry.658811855": q1,
+              "entry.1724873038": q2,
+              "entry.1246297223": (q4 === "Keyboard Keychain Clicker" ? "Keyboard Keychain Clicker" : "FEELAUTHIA Journaling Book"),
+              "entry.786814327": q5 || "(Sensory idea)",
+              "entry.1277415933": q6 || "(Story feeling)",
+              "entry.1015320630": q7 || ""
             };
 
             for (const [name, val] of Object.entries(entries)) {
@@ -3622,12 +3649,12 @@
               hiddenForm.appendChild(inp);
             }
 
-            // Checkboxes (multiple values for entry.710428778)
+            // Checkboxes (multiple values for entry.72386828)
             const chosenBoxes = q3Boxes.length > 0 ? q3Boxes : ["Visual Novel Story"];
             chosenBoxes.forEach((choice) => {
               const cbInp = document.createElement("input");
               cbInp.type = "hidden";
-              cbInp.name = "entry.710428778";
+              cbInp.name = "entry.72386828";
               cbInp.value = choice;
               hiddenForm.appendChild(cbInp);
             });
